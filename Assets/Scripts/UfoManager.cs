@@ -7,12 +7,11 @@ namespace Guarana
 {
     public class UfoManager : MonoBehaviour
     {
-        //==== Debug ====
+        //==== Exposed Fields ====
         [Header("Debug")]
         [SerializeField, Tooltip("Colorize enemies so it shows as a gradient from blue to red.")]
         private bool _coloredUfos = false;
 
-        //==== Set Up ====
         [Header("Set Up")]
         [SerializeField, Tooltip("Center of the zone the UFOs are contained in.")]
         private Vector2 _ufoZoneCenter = Vector2.zero;
@@ -21,9 +20,6 @@ namespace Guarana
         [SerializeField, Tooltip("Size of one UFO.")]
         private Vector2 _ufoSize = Vector2.one;
 
-        private Vector2[,] _ufoTiles = null;
-
-        //==== Game ====
         [Header("Gameplay values")]
         [SerializeField, Tooltip("UFO GameObject.")]
         private GameObject _ufoGo = null;
@@ -34,19 +30,26 @@ namespace Guarana
         [SerializeField, Tooltip("Initial number of rows on game start.")]
         private int _nbOfRowsToSpawnOnStart = 2;
 
+        //==== Fields ====
+        private uint _poolInitialSize = 0;
+        private List<GameObject> _testPool = null;
+        private Vector2[,] _ufoTiles = null;
         private float _spawnTimeCountdown = 0f;
 
-        //==== Pool ====
-        private uint _poolInitialSize = 0;
-        //private Ufo[] _ufoPool = null;
-        private List<GameObject> _testPool = null;
+        //==== Properties ====
+        public static bool IsPaused { get; set;  }
 
+        //==== Methods ====
         #region UNITY FUNCTIONS
-        private void Start()
+        private IEnumerator Start()
         {
             UpdateUfoTiles();
             SpawnUfos();
-            HideUfoRows(_nbOfRowsToSpawnOnStart);
+            HideUfoRows();
+
+            yield return new WaitForSeconds(_spawnStartDelay);
+
+            ShowUfoRows(_nbOfRowsToSpawnOnStart);
         }
 
         private void OnDrawGizmosSelected()
@@ -174,17 +177,30 @@ namespace Guarana
             }
         }
 
-        private void HideUfoRows(int NbOfRowsStillVisible = 0)
+        private void HideUfoRows()
         {
-            if(NbOfRowsStillVisible >= _ufoTiles.GetLength(1))
-                NbOfRowsStillVisible = _ufoTiles.GetLength(1);
-
-            int a = NbOfRowsStillVisible * _ufoTiles.GetLength(0);
-            for (int j = NbOfRowsStillVisible; j < _ufoTiles.GetLength(1); j++)
+            int a = 0;
+            for (int j = 0; j < _ufoTiles.GetLength(1); j++)
             {
                 for (int i = 0; i < _ufoTiles.GetLength(0); i++)
                 {
                     _testPool[a].SetActive(false);
+                    a++;
+                }
+            }
+        }
+
+        private void ShowUfoRows(int n)
+        {
+            if(n >= _ufoTiles.GetLength(1))
+                n = _ufoTiles.GetLength(1);
+
+            int a = 0;
+            for (int j = 0; j < n; j++)
+            {
+                for (int i = 0; i < _ufoTiles.GetLength(0); i++)
+                {
+                    _testPool[a].SetActive(true);
                     a++;
                 }
             }
