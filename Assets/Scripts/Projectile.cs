@@ -36,7 +36,10 @@ namespace Guarana
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            throw new NotImplementedException();
+            if (!col.CompareTag("Enemy")) return;
+            
+            Destroy(gameObject);
+            Destroy(col.gameObject);
         }
 
         #endregion
