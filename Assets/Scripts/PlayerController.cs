@@ -13,6 +13,9 @@ namespace Guarana
         [SerializeField] private float _projectileSpeed;
         [SerializeField] private float _shootCooldown;
 
+        [Header("SFX")] 
+        [SerializeField] private AudioClip[] _shootSfxs;
+
         private Rigidbody2D _rb;
         private float _yPos;
 

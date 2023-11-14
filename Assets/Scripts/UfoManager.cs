@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Guarana
 {
-    public class UfoSpawner : MonoBehaviour
+    public class UfoManager : MonoBehaviour
     {
         //==== Debug ====
         [Header("Debug")]
