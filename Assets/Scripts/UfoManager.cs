@@ -23,18 +23,14 @@ namespace Guarana
         [Header("Gameplay values")]
         [SerializeField, Tooltip("UFO GameObject.")]
         private GameObject _ufoGo = null;
-        [SerializeField, Tooltip("In seconds, rate at which the UFO are being spawned.")]
-        private float _spawnTime = 1f;
-        [SerializeField, Tooltip("In seconds, time to wait after Start() for the first UFO to spawn.")]
+        [SerializeField, Tooltip("Speed of the Ufos at Start().")]
+        private Vector2 _initialSpeed = Vector2.one;
+        [SerializeField, Tooltip("In seconds, time to wait after Start() for the first UFOs to spawn.")]
         private float _spawnStartDelay = 2f;
-        [SerializeField, Tooltip("Initial number of rows on game start.")]
-        private int _nbOfRowsToSpawnOnStart = 2;
 
         //==== Fields ====
-        private uint _poolInitialSize = 0;
-        private List<GameObject> _testPool = null;
         private Vector2[,] _ufoTiles = null;
-        private float _spawnTimeCountdown = 0f;
+        private GameObject[] _ufos = null;
 
         //==== Properties ====
         public static bool IsPaused { get; set;  }
@@ -43,13 +39,25 @@ namespace Guarana
         #region UNITY FUNCTIONS
         private IEnumerator Start()
         {
+            IsPaused = true;
+
             UpdateUfoTiles();
             SpawnUfos();
-            HideUfoRows();
+            HideUfos();
 
             yield return new WaitForSeconds(_spawnStartDelay);
 
-            ShowUfoRows(_nbOfRowsToSpawnOnStart);
+            ShowUfoRows();
+
+            IsPaused = false;
+        }
+
+        private void Update()
+        {
+            if(IsPaused)
+                return;
+
+            //MoveUfos();
         }
 
         private void OnDrawGizmosSelected()
@@ -88,7 +96,7 @@ namespace Guarana
         }
         #endregion
 
-        #region CUSTOM FUNCTIONS
+        #region CUSTOM PRIVATES
         private Vector2Int NumberOfUfosThatCanFit()
         {
             int x = (int)(_ufoZoneRange.x / _ufoSize.x);
@@ -138,14 +146,14 @@ namespace Guarana
                         if(j % 2 == 0)
                             newX = start.x + paddingX + _ufoSize.x * .5f;
                         else
-                            newX = -start.x - paddingX - _ufoSize.x * .5f;
+                            newX = -start.x - (paddingX + _ufoSize.x * .5f);
                     }
                     else
                     {
                         if (j % 2 == 0)
                             newX = previousPoint.x + paddingX + _ufoSize.x;
                         else
-                            newX = previousPoint.x - paddingX - _ufoSize.x;
+                            newX = previousPoint.x - (paddingX + _ufoSize.x);
                     }
 
                     _ufoTiles[i, j] = new Vector2(newX, newY);
@@ -156,8 +164,8 @@ namespace Guarana
         
         private void SpawnUfos()
         {
-            _poolInitialSize = (uint)(_ufoTiles.GetLength(0) * _ufoTiles.GetLength(1));
-            _testPool = new List<GameObject>((int)_poolInitialSize);
+            int arraySize = (_ufoTiles.GetLength(0) * _ufoTiles.GetLength(1));
+            _ufos = new GameObject[arraySize];
 
             int a = 0;
             for (int j = 0; j < _ufoTiles.GetLength(1); j++)
@@ -169,41 +177,43 @@ namespace Guarana
                     
                     // Juste pour test
                     if(_coloredUfos)
-                        obj.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.blue, Color.red, (float)a / _poolInitialSize);
+                        obj.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.blue, Color.red, (float)a / arraySize);
 
-                    _testPool.Add(obj);
+                    _ufos[a] = obj;
                     a++;
                 }
             }
         }
 
-        private void HideUfoRows()
+        private void HideUfos()
         {
             int a = 0;
             for (int j = 0; j < _ufoTiles.GetLength(1); j++)
             {
                 for (int i = 0; i < _ufoTiles.GetLength(0); i++)
                 {
-                    _testPool[a].SetActive(false);
+                    _ufos[a].SetActive(false);
                     a++;
                 }
             }
         }
 
-        private void ShowUfoRows(int n)
+        private void ShowUfoRows()
         {
-            if(n >= _ufoTiles.GetLength(1))
-                n = _ufoTiles.GetLength(1);
-
             int a = 0;
-            for (int j = 0; j < n; j++)
+            for (int j = 0; j < _ufoTiles.GetLength(1); j++)
             {
                 for (int i = 0; i < _ufoTiles.GetLength(0); i++)
                 {
-                    _testPool[a].SetActive(true);
+                    _ufos[a].SetActive(true);
                     a++;
                 }
             }
+        }
+
+        private void Move()
+        {
+
         }
         #endregion
     }
