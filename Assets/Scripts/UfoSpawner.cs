@@ -6,6 +6,11 @@ namespace Guarana
 {
     public class UfoSpawner : MonoBehaviour
     {
+        //==== Debug ====
+        [Header("Debug")]
+        [SerializeField, Tooltip("Colorize enemies so it shows as a gradient from blue to red.")]
+        private bool _coloredUfos = false;
+
         //==== Set Up ====
         [Header("Set Up")]
         [SerializeField, Tooltip("Center of the zone the UFOs are contained in.")]
@@ -25,19 +30,29 @@ namespace Guarana
         private float _spawnTime = 1f;
         [SerializeField, Tooltip("In seconds, time to wait after Start() for the first UFO to spawn.")]
         private float _spawnStartDelay = 2f;
+        [SerializeField, Tooltip("Initial number of rows on game start.")]
+        private int _nbOfRowsToSpawnOnStart = 2;
 
         private float _spawnTimeCountdown = 0f;
 
         //==== Pool ====
         private uint _poolInitialSize = 0;
         //private Ufo[] _ufoPool = null;
+        private List<GameObject> _testPool = null;
 
         #region UNITY FUNCTIONS
+        private void Start()
+        {
+            UpdateUfoTiles();
+            SpawnUfos();
+            HideUfoRows(_nbOfRowsToSpawnOnStart);
+        }
+
         private void OnDrawGizmosSelected()
         {
             // Center
             Gizmos.color = Color.white;
-            Gizmos.DrawWireCube(_ufoZoneCenter, Vector3.one);
+            Gizmos.DrawWireCube(_ufoZoneCenter, .5f * Vector3.one);
 
             // Vertical
             Gizmos.color = Color.green;
@@ -52,6 +67,9 @@ namespace Guarana
             Gizmos.DrawWireCube(_ufoZoneCenter + new Vector2(_ufoZoneRange.x * 0.5f, 0), new Vector2(.1f, 1));
             Gizmos.DrawLine(_ufoZoneCenter, _ufoZoneCenter - new Vector2(_ufoZoneRange.x * 0.5f, 0));
             Gizmos.DrawWireCube(_ufoZoneCenter - new Vector2(_ufoZoneRange.x * 0.5f, 0), new Vector2(.1f, 1));
+
+            if (UnityEditor.EditorApplication.isPlaying)
+                return;
 
             // Ufo boxes
             UpdateUfoTiles();
@@ -128,6 +146,45 @@ namespace Guarana
 
                     _ufoTiles[i, j] = new Vector2(newX, newY);
                     previousPoint = new Vector2(newX, newY);
+                }
+            }
+        }
+        
+        private void SpawnUfos()
+        {
+            _poolInitialSize = (uint)(_ufoTiles.GetLength(0) * _ufoTiles.GetLength(1));
+            _testPool = new List<GameObject>((int)_poolInitialSize);
+
+            int a = 0;
+            for (int j = 0; j < _ufoTiles.GetLength(1); j++)
+            {
+                for (int i = 0; i < _ufoTiles.GetLength(0); i++)
+                {
+                    GameObject obj = Instantiate(_ufoGo, _ufoTiles[i, j], Quaternion.identity, this.transform);
+                    obj.transform.localScale = _ufoSize;
+                    
+                    // Juste pour test
+                    if(_coloredUfos)
+                        obj.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.blue, Color.red, (float)a / _poolInitialSize);
+
+                    _testPool.Add(obj);
+                    a++;
+                }
+            }
+        }
+
+        private void HideUfoRows(int NbOfRowsStillVisible = 0)
+        {
+            if(NbOfRowsStillVisible >= _ufoTiles.GetLength(1))
+                NbOfRowsStillVisible = _ufoTiles.GetLength(1);
+
+            int a = NbOfRowsStillVisible * _ufoTiles.GetLength(0);
+            for (int j = NbOfRowsStillVisible; j < _ufoTiles.GetLength(1); j++)
+            {
+                for (int i = 0; i < _ufoTiles.GetLength(0); i++)
+                {
+                    _testPool[a].SetActive(false);
+                    a++;
                 }
             }
         }

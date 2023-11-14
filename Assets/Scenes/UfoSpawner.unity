@@ -289,12 +289,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943da8c8b784df8458f4e95e67d33c9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _coloredUfos: 1
   _ufoZoneCenter: {x: 0, y: 1}
-  _ufoZoneRange: {x: 17.77778, y: 8}
+  _ufoZoneRange: {x: 10, y: 8}
   _ufoSize: {x: 1.8, y: 1.8}
-  _ufoGo: {fileID: 0}
+  _ufoGo: {fileID: 6995596345171803104, guid: 10507db01d9909e459ddab3bacfec441, type: 3}
   _spawnTime: 1
   _spawnStartDelay: 2
+  _nbOfRowsToSpawnOnStart: 2
 --- !u!4 &1579396078
 Transform:
   m_ObjectHideFlags: 0
