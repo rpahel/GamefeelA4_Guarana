@@ -7,12 +7,17 @@ namespace Guarana
         #region Fields
 
         [SerializeField] private float _moveSpeed;
-        [SerializeField] private float _projectileSpeed;
-
+        
+        [Header("Projectile")]
         [SerializeField] private Projectile _projectile;
+        [SerializeField] private float _projectileSpeed;
+        [SerializeField] private float _shootCooldown;
 
         private Rigidbody2D _rb;
         private float _yPos;
+
+        private float _shootCooldownTimer;
+        private bool _tryToShoot;
 
         #endregion
 
@@ -43,9 +48,25 @@ namespace Guarana
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                _tryToShoot = true;
+            }
+            else if (Input.GetKeyUp(KeyCode.Space))
+            {
+                _tryToShoot = false;
+            }
+            
+            if (_tryToShoot && _shootCooldownTimer <= 0)
+            {
                 var position = new Vector2(transform.position.x, transform.position.y + _projectile.Collider.size.y / 2);
                 var projectile = Instantiate(_projectile, position, Quaternion.identity);
                 projectile.Rb.velocity = new Vector2(0f, _projectileSpeed);
+
+                _shootCooldownTimer = _shootCooldown;
+            }
+
+            if (_shootCooldownTimer > 0)
+            {
+                _shootCooldownTimer -= Time.deltaTime;
             }
         }
 

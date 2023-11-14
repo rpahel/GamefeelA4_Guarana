@@ -1,41 +1,44 @@
 using System;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+namespace Guarana
 {
-    #region Fields
+    public class Projectile : MonoBehaviour
+    {
+        #region Fields
 
-    [SerializeField] private Rigidbody2D _rb;
-    [SerializeField] private BoxCollider2D _collider;
+        [SerializeField] private Rigidbody2D _rb;
+        [SerializeField] private BoxCollider2D _collider;
         
-    [SerializeField] private float _autoDeleteTimer;
+        [SerializeField] private float _autoDeleteTimer;
 
-    #endregion
+        #endregion
 
-    #region Properties
+        #region Properties
 
-    public Rigidbody2D Rb => _rb;
+        public Rigidbody2D Rb => _rb;
     
-    public BoxCollider2D Collider => _collider;
+        public BoxCollider2D Collider => _collider;
 
-    #endregion
+        #endregion
 
-    #region Unity Event Functions
+        #region Unity Event Functions
 
-    private void Update()
-    {
-        _autoDeleteTimer -= Time.deltaTime;
-
-        if (_autoDeleteTimer <= 0)
+        private void Update()
         {
-            Destroy(gameObject);
+            _autoDeleteTimer -= Time.deltaTime;
+
+            if (_autoDeleteTimer <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        throw new NotImplementedException();
-    }
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            throw new NotImplementedException();
+        }
 
-    #endregion
+        #endregion
+    }
 }
