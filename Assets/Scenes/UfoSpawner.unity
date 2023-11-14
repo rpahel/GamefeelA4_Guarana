@@ -271,7 +271,7 @@ GameObject:
   - component: {fileID: 1579396078}
   - component: {fileID: 1579396077}
   m_Layer: 0
-  m_Name: UfoSpawner
+  m_Name: UfoManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
