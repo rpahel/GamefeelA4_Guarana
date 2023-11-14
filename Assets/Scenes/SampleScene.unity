@@ -169,7 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ufoZoneCenter: {x: 0, y: 1}
   _ufoZoneRange: {x: 17.77778, y: 8}
-  _ufoSize: {x: 1, y: 1}
+  _ufoSize: {x: 1.5, y: 1.5}
   _ufoGo: {fileID: 0}
   _spawnTime: 1
   _spawnStartDelay: 2

@@ -55,7 +55,7 @@ namespace Guarana
 
             // Ufo boxes
             UpdateUfoTiles();
-            Gizmos.color = Color.blue;
+            Gizmos.color = Color.cyan;
             for (int i = 0; i < _ufoTiles.GetLength(0); i++)
             {
                 for(int j = 0; j < _ufoTiles.GetLength(1); j++)
@@ -97,19 +97,19 @@ namespace Guarana
 
             Vector2 start = _ufoZoneCenter + .5f * new Vector2(-_ufoZoneRange.x, _ufoZoneRange.y);
 
+
+            float newX = 0;
+            float newY = 0;
             Vector2 previousPoint = Vector2.zero;
             for (int j = 0; j < possibleNbOfUfos.y; j++)
             {
+                if (j == 0)
+                    newY = start.y - (paddingY + _ufoSize.x * .5f);
+                else
+                    newY = previousPoint.y - (paddingY + _ufoSize.y);
+
                 for (int i = 0; i < possibleNbOfUfos.x; i++)
                 {
-                    float newX = 0;
-                    float newY = 0;
-
-                    if (j == 0)
-                        newY = start.y - (paddingY + _ufoSize.x * .5f);
-                    else
-                        newY = previousPoint.y - (paddingY + _ufoSize.y);
-
                     // ZigZag (Vers la droite puis vers la gauche) // Pb ici
                     if(i == 0)
                     {
