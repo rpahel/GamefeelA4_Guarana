@@ -315,3 +315,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 828ea797088b38247b4c39f5175109ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hp: 2
+  OnStart: []
+  OnShoot: []
+  OnHurt: []
+  OnDeath: []
