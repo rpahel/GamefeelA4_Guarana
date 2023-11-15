@@ -1,17 +1,21 @@
-using System;
+using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Guarana
 {
     public class UfoManager : MonoBehaviour
     {
         //==== Exposed Fields ====
+#if UNITY_EDITOR
         [Header("Debug")]
         [SerializeField, Tooltip("Colorize enemies so it shows as a gradient from blue to red.")]
         private bool _coloredUfos = false;
+#endif
 
         [Header("Set Up")]
         [SerializeField, Tooltip("The zone the UFOs are contained in.")]
@@ -26,15 +30,25 @@ namespace Guarana
         [Header("Gameplay values")]
         [SerializeField, Tooltip("UFO GameObject.")]
         private GameObject _ufoGo = null;
-        [SerializeField, Tooltip("Speed of the Ufos at Start().")]
-        private Vector2 _initialSpeed = Vector2.one;
         [SerializeField, Tooltip("In seconds, time to wait after Start() for the first UFOs to spawn.")]
         private float _spawnStartDelay = 2f;
+        [SerializeField, Tooltip("Easing of the movement of the UFOs between two waypoints.")]
+        private Ease _movementEase = Ease.Linear;
+        [SerializeField, Tooltip("Speed of the Ufos at Start().")]
+        private float _initialSpeed = 1f;
+        [SerializeField, Tooltip("Amount to speed to add to the UFOs when one is killed.")]
+        private float _speedIncrementAmount = 0.1f;
+        [SerializeField, Tooltip("Time the Ufos wait before moving again to the next waypoint.")]
+        private float _movePauseDuration = 1f;
 
         //==== Fields ====
+        private int _currentWaypointIndex = 0;
+        private float _currentSpeed = 0f;
         private Vector2[,] _ufoTiles = null;
         private Vector2[] _wayPoints = null;
-        private GameObject[] _ufos = null;
+        private Vector2 _previousWaypoint = Vector2.zero;
+        private Ufo[] _ufos = null;
+        private Coroutine _movementCoroutine = null;
 
         //==== Properties ====
         public static bool IsPaused { get; set;  }
@@ -44,6 +58,7 @@ namespace Guarana
         private IEnumerator Start()
         {
             IsPaused = true;
+            _currentSpeed = _initialSpeed;
 
             PinUfoZoneToTopLeft();
             UpdateUfoTiles();
@@ -62,10 +77,11 @@ namespace Guarana
         {
             if(IsPaused)
                 return;
-
-            //MoveUfos();
+            
+            MoveTo(_currentWaypointIndex + 1);
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
             // Game area Vertical
@@ -106,6 +122,7 @@ namespace Guarana
             Gizmos.color = Color.magenta;
             DrawPath();
         }
+#endif
         #endregion
 
         #region CUSTOM PRIVATES
@@ -174,21 +191,23 @@ namespace Guarana
         private void SpawnUfos()
         {
             int arraySize = (_ufoTiles.GetLength(0) * _ufoTiles.GetLength(1));
-            _ufos = new GameObject[arraySize];
+            _ufos = new Ufo[arraySize];
 
             int a = 0;
             for (int j = 0; j < _ufoTiles.GetLength(1); j++)
             {
                 for (int i = 0; i < _ufoTiles.GetLength(0); i++)
                 {
-                    GameObject obj = Instantiate(_ufoGo, _ufoTiles[i, j], Quaternion.identity, _ufoZone);
-                    obj.transform.localScale = _ufoSize;
-                    
-                    // Juste pour test
-                    if(_coloredUfos)
-                        obj.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.blue, Color.red, (float)a / arraySize);
+                    Ufo ufo = Instantiate(_ufoGo, _ufoTiles[i, j], Quaternion.identity, _ufoZone).GetComponent<Ufo>();
+                    ufo.transform.localScale = _ufoSize;
 
-                    _ufos[a] = obj;
+#if UNITY_EDITOR
+                    // Juste pour test
+                    if (_coloredUfos)
+                        ufo.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.blue, Color.red, (float)a / arraySize);
+#endif
+
+                    _ufos[a] = ufo;
                     a++;
                 }
             }
@@ -201,7 +220,7 @@ namespace Guarana
             {
                 for (int i = 0; i < _ufoTiles.GetLength(0); i++)
                 {
-                    _ufos[a].SetActive(false);
+                    _ufos[a].gameObject.SetActive(false);
                     a++;
                 }
             }
@@ -214,7 +233,7 @@ namespace Guarana
             {
                 for (int i = 0; i < _ufoTiles.GetLength(0); i++)
                 {
-                    _ufos[a].SetActive(true);
+                    _ufos[a].gameObject.SetActive(true);
                     a++;
                 }
             }
@@ -252,6 +271,7 @@ namespace Guarana
             _ufoZone.localPosition = .5f * new Vector2(-_gameArea.x + _ufoZoneSize.x, _gameArea.y - _ufoZoneSize.y);
         }
 
+#if UNITY_EDITOR
         private void DrawPath()
         {
             for(int i = 0; i < _wayPoints.Length - 1; i++)
@@ -263,10 +283,45 @@ namespace Guarana
                     Gizmos.DrawWireSphere(_wayPoints[i+1], .2f);
             }
         }
+#endif
 
-        private void Move()
+        private void MoveTo(int wayPointIndex)
         {
+            if (_movementCoroutine != null)
+                return;
 
+            if (wayPointIndex >= _wayPoints.Length)
+            {
+                IsPaused = true;
+                return;
+            }
+
+            Vector2 target = _wayPoints[wayPointIndex];
+            _movementCoroutine = StartCoroutine(MoveToCoroutine(target));
+        }
+
+        private IEnumerator MoveToCoroutine(Vector2 target)
+        {
+            float wait = _movePauseDuration;
+
+            while(wait > 0)
+            {
+                wait -= Time.deltaTime;
+                yield return null; // attends une frame
+            }
+
+            Vector2 startPos = _ufoZone.position;
+            float duration = (startPos - target).magnitude / _currentSpeed;
+
+            bool isCompleted = false;
+            var tween = _ufoZone.DOMove(target, duration).SetEase(_movementEase);
+            tween.onComplete += () => isCompleted = true;
+            yield return new WaitUntil(() => isCompleted == true);
+
+            _currentWaypointIndex++;
+
+            _movementCoroutine = null;
+            yield break;
         }
         #endregion
     }

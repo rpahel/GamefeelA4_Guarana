@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 9129415223350007537}
   - component: {fileID: 7620926495838154214}
   - component: {fileID: 3080353153488690058}
+  - component: {fileID: 8132312032859215309}
   m_Layer: 0
   m_Name: UfoPrefab
   m_TagString: Untagged
@@ -302,3 +303,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8132312032859215309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6995596345171803104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828ea797088b38247b4c39f5175109ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
