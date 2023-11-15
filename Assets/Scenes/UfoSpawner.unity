@@ -159,8 +159,8 @@ Camera:
   m_GameObject: {fileID: 1154757044}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -290,13 +290,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coloredUfos: 1
-  _ufoZoneCenter: {x: 0, y: 1}
-  _ufoZoneRange: {x: 10, y: 8}
-  _ufoSize: {x: 1.8, y: 1.8}
+  _ufoZoneCenter: {x: 0, y: 2.5}
+  _ufoZoneRange: {x: 10, y: 5}
+  _ufoSize: {x: 1.001, y: 1.001}
   _ufoGo: {fileID: 6995596345171803104, guid: 10507db01d9909e459ddab3bacfec441, type: 3}
-  _spawnTime: 1
+  _initialSpeed: {x: 1, y: 1}
   _spawnStartDelay: 2
-  _nbOfRowsToSpawnOnStart: 2
 --- !u!4 &1579396078
 Transform:
   m_ObjectHideFlags: 0
