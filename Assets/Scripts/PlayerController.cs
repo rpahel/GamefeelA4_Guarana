@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Guarana
@@ -24,6 +25,14 @@ namespace Guarana
 
         #endregion
 
+        #region Events
+
+        public static Action playerShot;
+
+        public static Action playerMove;
+
+        #endregion
+
         #region Unity Event Functions
 
         private void Awake()
@@ -45,6 +54,8 @@ namespace Guarana
             var newWorldPos = Camera.main.ScreenToWorldPoint(newScreenPos);
             
             _rb.MovePosition(newWorldPos);
+            
+            playerMove?.Invoke();
         }
 
         private void Update()
@@ -65,6 +76,8 @@ namespace Guarana
                 projectile.Rb.velocity = new Vector2(0f, _projectileSpeed);
 
                 _shootCooldownTimer = _shootCooldown;
+                
+                playerShot?.Invoke();
             }
 
             if (_shootCooldownTimer > 0)
