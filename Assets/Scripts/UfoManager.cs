@@ -1,6 +1,8 @@
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
+using DG.Tweening.Plugins.Options;
+using static UnityEngine.GraphicsBuffer;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -42,24 +44,28 @@ namespace Guarana
         private float _movePauseDuration = 1f;
 
         //==== Fields ====
+        private int _nbOfAliveUfos = 0;
         private int _currentWaypointIndex = 0;
         private float _currentSpeed = 0f;
         private Vector2[,] _ufoTiles = null;
         private Vector2[] _wayPoints = null;
-        private Vector2 _previousWaypoint = Vector2.zero;
         private Ufo[] _ufos = null;
         private Coroutine _movementCoroutine = null;
+        private Tweener _moveTween = null;
 
         //==== Properties ====
         public static bool IsPaused { get; set;  }
 
         //==== Methods ====
         #region UNITY FUNCTIONS
-        private IEnumerator Start()
+        private void Awake()
         {
             IsPaused = true;
             _currentSpeed = _initialSpeed;
+        }
 
+        private IEnumerator Start()
+        {
             PinUfoZoneToTopLeft();
             UpdateUfoTiles();
             CalculateWaypoints();
@@ -123,6 +129,26 @@ namespace Guarana
             DrawPath();
         }
 #endif
+        #endregion
+
+        #region CUSTOM PUBLIC
+        public void UfoHasDied()
+        {
+            _nbOfAliveUfos--;
+
+            if(_nbOfAliveUfos <= 0)
+            {
+                // Win
+                return;
+            }
+
+            _currentSpeed += _speedIncrementAmount;
+            _movementCoroutine = null;
+            _moveTween.Kill();
+
+            MoveTo(_currentWaypointIndex + 1);
+        }
+
         #endregion
 
         #region CUSTOM PRIVATES
@@ -211,6 +237,8 @@ namespace Guarana
                     a++;
                 }
             }
+
+            _nbOfAliveUfos = _ufos.Length;
         }
 
         private void HideUfos()
@@ -313,10 +341,9 @@ namespace Guarana
             Vector2 startPos = _ufoZone.position;
             float duration = (startPos - target).magnitude / _currentSpeed;
 
-            bool isCompleted = false;
-            var tween = _ufoZone.DOMove(target, duration).SetEase(_movementEase);
-            tween.onComplete += () => isCompleted = true;
-            yield return new WaitUntil(() => isCompleted == true);
+            _moveTween = _ufoZone.DOMove(target, duration).SetEase(_movementEase);
+
+            yield return new WaitUntil(() => _moveTween.IsComplete() == true);
 
             _currentWaypointIndex++;
 
