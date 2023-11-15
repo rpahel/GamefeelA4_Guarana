@@ -17,7 +17,7 @@ public class Ufo : MonoBehaviour
 
     //==== Hidden fields ====
     private int _currentHp = 0;
-    private UfoManager _ufoManager;
+    public UfoManager UfoManager { get; set; }
 
     //==== Public methods ====
     public void TakeDamage(int damage)
@@ -44,7 +44,7 @@ public class Ufo : MonoBehaviour
     {
         _currentHp = 0;
         gameObject.SetActive(false);
-        _ufoManager.UfoHasDied();
+        UfoManager.UfoHasDied();
     }
 
     private void Hurt()
