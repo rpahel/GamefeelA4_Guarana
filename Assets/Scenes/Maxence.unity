@@ -334,7 +334,7 @@ PrefabInstance:
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _ufoGo
       value: 
-      objectReference: {fileID: 6995596345171803104, guid: 4ee9b5c8e57b62e48aed6e732e37a21a, type: 3}
+      objectReference: {fileID: 6995596345171803104, guid: a4d668f3dbf03fe4581e077fd8149de7, type: 3}
     - target: {fileID: 7611736653603858691, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -181,7 +181,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9129415223350007537}
   - component: {fileID: 7620926495838154214}
-  - component: {fileID: 2955106988523076329}
+  - component: {fileID: 3080353153488690058}
+  - component: {fileID: 8132312032859215309}
   m_Layer: 0
   m_Name: KillableUfo
   m_TagString: Enemy
@@ -257,7 +258,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &2955106988523076329
+--- !u!61 &3080353153488690058
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -286,8 +287,8 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 1
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
@@ -302,3 +303,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8132312032859215309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6995596345171803104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 828ea797088b38247b4c39f5175109ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
