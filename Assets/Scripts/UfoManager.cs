@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace Guarana
@@ -13,10 +14,12 @@ namespace Guarana
         private bool _coloredUfos = false;
 
         [Header("Set Up")]
-        [SerializeField, Tooltip("Center of the zone the UFOs are contained in.")]
-        private Vector2 _ufoZoneCenter = Vector2.zero;
+        [SerializeField, Tooltip("The zone the UFOs are contained in.")]
+        private Transform _ufoZone = null;
         [SerializeField, Tooltip("Size of the zone the UFOs are contained in.")]
-        private Vector2 _ufoZoneRange = Vector2.zero;
+        private Vector2 _ufoZoneSize = Vector2.zero;
+        [SerializeField, Tooltip("Size of the game screen")]
+        private Vector2 _gameArea = Vector2.zero;
         [SerializeField, Tooltip("Size of one UFO.")]
         private Vector2 _ufoSize = Vector2.one;
 
@@ -30,6 +33,7 @@ namespace Guarana
 
         //==== Fields ====
         private Vector2[,] _ufoTiles = null;
+        private Vector2[] _wayPoints = null;
         private GameObject[] _ufos = null;
 
         //==== Properties ====
@@ -41,7 +45,9 @@ namespace Guarana
         {
             IsPaused = true;
 
+            PinUfoZoneToTopLeft();
             UpdateUfoTiles();
+            CalculateWaypoints();
             SpawnUfos();
             HideUfos();
 
@@ -62,28 +68,29 @@ namespace Guarana
 
         private void OnDrawGizmosSelected()
         {
-            // Center
-            Gizmos.color = Color.white;
-            Gizmos.DrawWireCube(_ufoZoneCenter, .5f * Vector3.one);
-
-            // Vertical
+            // Game area Vertical
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(_ufoZoneCenter, _ufoZoneCenter + new Vector2(0, _ufoZoneRange.y * 0.5f));
-            Gizmos.DrawWireCube(_ufoZoneCenter + new Vector2(0, _ufoZoneRange.y * 0.5f), new Vector2(1, 0.1f));
-            Gizmos.DrawLine(_ufoZoneCenter, _ufoZoneCenter - new Vector2(0, _ufoZoneRange.y * 0.5f));
-            Gizmos.DrawWireCube(_ufoZoneCenter - new Vector2(0, _ufoZoneRange.y * 0.5f), new Vector2(1, 0.1f));
+            Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + new Vector2(0, _gameArea.y * 0.5f));
+            Gizmos.DrawWireCube((Vector2)transform.position + new Vector2(0, _gameArea.y * 0.5f), new Vector2(1, 0.1f));
+            Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position - new Vector2(0, _gameArea.y * 0.5f));
+            Gizmos.DrawWireCube((Vector2)transform.position - new Vector2(0, _gameArea.y * 0.5f), new Vector2(1, 0.1f));
 
-            // Horizontal
+            // Game area Horizontal
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(_ufoZoneCenter, _ufoZoneCenter + new Vector2(_ufoZoneRange.x * 0.5f, 0));
-            Gizmos.DrawWireCube(_ufoZoneCenter + new Vector2(_ufoZoneRange.x * 0.5f, 0), new Vector2(.1f, 1));
-            Gizmos.DrawLine(_ufoZoneCenter, _ufoZoneCenter - new Vector2(_ufoZoneRange.x * 0.5f, 0));
-            Gizmos.DrawWireCube(_ufoZoneCenter - new Vector2(_ufoZoneRange.x * 0.5f, 0), new Vector2(.1f, 1));
+            Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position + new Vector2(_gameArea.x * 0.5f, 0));
+            Gizmos.DrawWireCube((Vector2)transform.position + new Vector2(_gameArea.x * 0.5f, 0), new Vector2(.1f, 1));
+            Gizmos.DrawLine((Vector2)transform.position, (Vector2)transform.position - new Vector2(_gameArea.x * 0.5f, 0));
+            Gizmos.DrawWireCube((Vector2)transform.position - new Vector2(_gameArea.x * 0.5f, 0), new Vector2(.1f, 1));
+
+            // Ufo Zone
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireCube(_ufoZone.position, _ufoZoneSize);
 
             if (UnityEditor.EditorApplication.isPlaying)
                 return;
 
-            // Ufo boxes
+            PinUfoZoneToTopLeft();
+
             UpdateUfoTiles();
             Gizmos.color = Color.cyan;
             for (int i = 0; i < _ufoTiles.GetLength(0); i++)
@@ -93,14 +100,19 @@ namespace Guarana
                     Gizmos.DrawWireCube(_ufoTiles[i, j], _ufoSize);
                 }
             }
+
+            CalculateWaypoints();
+
+            Gizmos.color = Color.magenta;
+            DrawPath();
         }
         #endregion
 
         #region CUSTOM PRIVATES
         private Vector2Int NumberOfUfosThatCanFit()
         {
-            int x = (int)(_ufoZoneRange.x / _ufoSize.x);
-            int y = (int)(_ufoZoneRange.y / _ufoSize.y);
+            int x = (int)(_ufoZoneSize.x / _ufoSize.x);
+            int y = (int)(_ufoZoneSize.y / _ufoSize.y);
 
             return new Vector2Int(x, y);
         }
@@ -116,8 +128,8 @@ namespace Guarana
             if (_ufoTiles == null || comparator != possibleNbOfUfos)
                 _ufoTiles = new Vector2[possibleNbOfUfos.x, possibleNbOfUfos.y];
 
-            float leftOverX = _ufoZoneRange.x - possibleNbOfUfos.x * _ufoSize.x;
-            float leftOverY = _ufoZoneRange.y - possibleNbOfUfos.y * _ufoSize.y;
+            float leftOverX = _ufoZoneSize.x - possibleNbOfUfos.x * _ufoSize.x;
+            float leftOverY = _ufoZoneSize.y - possibleNbOfUfos.y * _ufoSize.y;
 
             if(leftOverX < 0) leftOverX = 0;
             if(leftOverY < 0) leftOverY = 0;
@@ -125,39 +137,36 @@ namespace Guarana
             float paddingX = leftOverX / (possibleNbOfUfos.x + 1);
             float paddingY = leftOverY / (possibleNbOfUfos.y + 1);
 
-            Vector2 start = _ufoZoneCenter + .5f * new Vector2(-_ufoZoneRange.x, _ufoZoneRange.y);
-
+            Vector2 start = (Vector2)_ufoZone.position + .5f * new Vector2(-_ufoZoneSize.x, _ufoZoneSize.y);
 
             float newX = 0;
             float newY = 0;
-            Vector2 previousPoint = Vector2.zero;
             for (int j = 0; j < possibleNbOfUfos.y; j++)
             {
                 if (j == 0)
                     newY = start.y - (paddingY + _ufoSize.x * .5f);
                 else
-                    newY = previousPoint.y - (paddingY + _ufoSize.y);
+                    newY = start.y - (paddingY + _ufoSize.x * .5f) - j * (paddingY + _ufoSize.y);
 
                 for (int i = 0; i < possibleNbOfUfos.x; i++)
                 {
-                    // ZigZag (Vers la droite puis vers la gauche) // Pb ici
+                    // ZigZag (Vers la droite puis vers la gauche)
                     if(i == 0)
                     {
                         if(j % 2 == 0)
                             newX = start.x + paddingX + _ufoSize.x * .5f;
                         else
-                            newX = -start.x - (paddingX + _ufoSize.x * .5f);
+                            newX = start.x + _ufoZoneSize.x - (paddingX + _ufoSize.x * .5f);
                     }
                     else
                     {
                         if (j % 2 == 0)
-                            newX = previousPoint.x + paddingX + _ufoSize.x;
+                            newX = start.x + paddingX + _ufoSize.x * .5f + i * (paddingX + _ufoSize.x);
                         else
-                            newX = previousPoint.x - (paddingX + _ufoSize.x);
+                            newX = start.x + _ufoZoneSize.x - (paddingX + _ufoSize.x * .5f) - i * (paddingX + _ufoSize.x);
                     }
 
                     _ufoTiles[i, j] = new Vector2(newX, newY);
-                    previousPoint = new Vector2(newX, newY);
                 }
             }
         }
@@ -172,7 +181,7 @@ namespace Guarana
             {
                 for (int i = 0; i < _ufoTiles.GetLength(0); i++)
                 {
-                    GameObject obj = Instantiate(_ufoGo, _ufoTiles[i, j], Quaternion.identity, this.transform);
+                    GameObject obj = Instantiate(_ufoGo, _ufoTiles[i, j], Quaternion.identity, _ufoZone);
                     obj.transform.localScale = _ufoSize;
                     
                     // Juste pour test
@@ -208,6 +217,50 @@ namespace Guarana
                     _ufos[a].SetActive(true);
                     a++;
                 }
+            }
+        }
+
+        private void CalculateWaypoints()
+        {
+            int fitY = (int)(_gameArea.y / _ufoSize.y) * 2; // Max number of waypoints
+
+            if (_wayPoints == null || _wayPoints.Length != fitY)
+                _wayPoints = new Vector2[fitY];
+
+            float waypointX = 0;
+            float waypointY = 0;
+            int n = 0;
+            for(int j = 0; j < fitY * .5f; j++)
+            {
+                waypointY = transform.position.y + .5f * (_gameArea.y - _ufoZoneSize.y) - j * _ufoSize.y;
+
+                for (int i = 0; i < 2; i++)
+                {
+                    if(j % 2 == 0)
+                        waypointX = transform.position.x + .5f * (_ufoZoneSize.x - _gameArea.x) + i * (_gameArea.x - _ufoZoneSize.x);
+                    else
+                        waypointX = transform.position.x - .5f * (_ufoZoneSize.x - _gameArea.x) - i * (_gameArea.x - _ufoZoneSize.x);
+
+                    _wayPoints[n] = new Vector2 (waypointX, waypointY);
+                    n++;
+                }
+            }
+        }
+
+        private void PinUfoZoneToTopLeft()
+        {
+            _ufoZone.localPosition = .5f * new Vector2(-_gameArea.x + _ufoZoneSize.x, _gameArea.y - _ufoZoneSize.y);
+        }
+
+        private void DrawPath()
+        {
+            for(int i = 0; i < _wayPoints.Length - 1; i++)
+            {
+                Gizmos.DrawWireSphere(_wayPoints[i], .2f);
+                Gizmos.DrawLine(_wayPoints[i], _wayPoints[i + 1]);
+
+                if(i == _wayPoints.Length - 2)
+                    Gizmos.DrawWireSphere(_wayPoints[i+1], .2f);
             }
         }
 
