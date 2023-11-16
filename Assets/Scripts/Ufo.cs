@@ -2,6 +2,7 @@ using Guarana;
 using System.Collections;
 using System.Collections.Generic;
 using Guarana.Interfaces;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,17 +16,20 @@ public class Ufo : MonoBehaviour
     private GameObject _spriteGameObject;
 
     [Header("Particles")]
-    [SerializeField]
-    private ParticleSystem[] _bloodParticles;
+    [SerializeField] private ParticleSystem[] _bloodParticles;
+    [SerializeField] private ParticleSystem _firstBloodParticles;
 
-    [Header("Sfx")]
-    [SerializeField]
-    private AudioClip _deathSfx;
+    [Header("SFX")]
+    [SerializeField] private AudioClip _deathSfx;
 
-    public UnityEvent[] OnStart;
-    public UnityEvent[] OnShoot;
-    public UnityEvent[] OnHurt;
-    public UnityEvent[] OnDeath;
+    [SerializeField]
+    private UnityEvent[] OnStart;
+    [SerializeField]
+    private UnityEvent[] OnShoot;
+    [SerializeField]
+    private UnityEvent[] OnHurt;
+    [SerializeField]
+    private UnityEvent[] OnDeath;
 
     //==== Hidden fields ====
     private int _currentHp = 0;
@@ -57,7 +61,6 @@ public class Ufo : MonoBehaviour
     private void Die()
     {
         _currentHp = 0;
-        gameObject.SetActive(false);
         UfoManager.UfoHasDied();
 
         _spriteGameObject.SetActive(false);
@@ -75,6 +78,6 @@ public class Ufo : MonoBehaviour
 
     private void Hurt()
     {
-
+        _firstBloodParticles.Play();
     }
 }

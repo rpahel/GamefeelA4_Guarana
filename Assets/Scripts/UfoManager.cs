@@ -12,6 +12,7 @@ namespace Guarana
     public class UfoManager : MonoBehaviour
     {
         //==== Exposed Fields ====
+
         [Header("Set Up")]
         [SerializeField, Tooltip("The zone the UFOs are contained in.")]
         private Transform _ufoZone = null;
@@ -39,9 +40,16 @@ namespace Guarana
         private float _movePauseDuration = 1f;
 
         [Header("Effects")]
-        public UnityEvent[] OnUfoDeath;
-        public UnityEvent[] OnUfoHurt;
-        public UnityEvent[] OnPlayerDeath;
+        [SerializeField, Tooltip("Blood splatter to spawn on wall.")]
+        private GameObject _bloodSplatter;
+        [SerializeField, Range(0f, 0.5f)]
+        private float _bloodSplatterSize = 0.5f;
+        [SerializeField]
+        private UnityEvent[] OnUfoDeath;
+        [SerializeField]
+        private UnityEvent[] OnUfoHurt;
+        [SerializeField]
+        private UnityEvent[] OnPlayerDeath;
 
         //==== Fields ====
         private int _nbOfAliveUfos = 0;
@@ -63,6 +71,18 @@ namespace Guarana
         {
             IsPaused = true;
             _currentSpeed = _initialSpeed;
+
+            BoxCollider2D leftBoxCollider2D = null;
+            BoxCollider2D rightBoxCollider2D = null;
+
+            leftBoxCollider2D = gameObject.AddComponent<BoxCollider2D>();
+            rightBoxCollider2D = gameObject.AddComponent<BoxCollider2D>();
+
+            leftBoxCollider2D.size = new Vector2(1f, _gameArea.y);
+            leftBoxCollider2D.offset = new Vector2((-_gameArea.x - 1f) * .5f, 0);
+
+            rightBoxCollider2D.size = new Vector2(1f, _gameArea.y);
+            rightBoxCollider2D.offset = new Vector2((_gameArea.x + 1f) * .5f, 0);
         }
 
         private IEnumerator Start()
@@ -86,6 +106,12 @@ namespace Guarana
                 return;
 
             MoveTo(_currentWaypointIndex + 1, _movementEase, true);
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            Debug.Log(collision.ToString());
+            Debug.Log(collision.gameObject.ToString());
         }
 
 #if UNITY_EDITOR
