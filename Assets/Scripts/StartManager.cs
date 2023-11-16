@@ -17,6 +17,27 @@ namespace Guarana
             StartCoroutine(StartGame());
         }
 
+        public void StopGame()
+        {
+            for (int i = 0; i < _BGs.Length; i++)
+            {
+                _BGs[i].enabled = false;
+            }
+            
+            for (int i = 0; i < _winds.Length; i++)
+            {
+                _winds[i].gameObject.SetActive(false);
+            }
+            
+            for (int i = 0; i < _playerFootSteps.Length; i++)
+            {
+                _playerFootSteps[i].gameObject.SetActive(false);
+            }
+
+            _playerController.enabled = false;
+            UfoManager.IsPaused = true;
+        }
+
         private IEnumerator StartGame()
         {
             yield return new WaitForSeconds(_timeBeforeStart);

@@ -35,11 +35,11 @@ namespace Guarana
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            Ufo ufo = null;
-            if (col.TryGetComponent(out ufo))
+            if (col.TryGetComponent(out Ufo ufo))
+            {
                 ufo.TakeDamage(1);
-
-            Destroy(gameObject);
+                Destroy(gameObject);
+            }
         }
 
         #endregion

@@ -1,4 +1,5 @@
 using System;
+using Guarana.Interfaces;
 using UnityEngine;
 
 namespace Guarana
@@ -16,6 +17,11 @@ namespace Guarana
 
         [Header("SFX")] 
         [SerializeField] private AudioClip[] _shootSfxs;
+        [SerializeField] private AudioClip _gameOverSfx;
+        [SerializeField] private ParticleSystem _gameOverVfx;
+
+        [SerializeField] private Shake _shake;
+        [SerializeField] private StartManager _startManager;
 
         private Rigidbody2D _rb;
         private float _yPos;
@@ -84,6 +90,19 @@ namespace Guarana
             {
                 _shootCooldownTimer -= Time.deltaTime;
             }
+        }
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (!col.CompareTag("Enemy")) return;
+
+            col.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, 1);
+            
+            ServiceLocator.Get().PlaySound(_gameOverSfx);
+            _gameOverVfx.Play();
+            _shake.StartShake();
+            
+            _startManager.StopGame();
         }
 
         #endregion
