@@ -10,7 +10,7 @@ public class Ufo : MonoBehaviour
     [SerializeField]
     private int _hp = 2;
 
-    [SerializeField] private GameObject _spriteGameObject;
+    [SerializeField] private Sprite _sprite;
 
     [Header("Particles")]
     [SerializeField] private ParticleSystem _bloodParticles;
