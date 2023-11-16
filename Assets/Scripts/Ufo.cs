@@ -17,12 +17,17 @@ public class Ufo : MonoBehaviour
     [Header("Particles")]
     [SerializeField] private ParticleSystem[] _bloodParticles;
 
-    [Header("SFX")] [SerializeField] private AudioClip _deathSfx;
+    [Header("SFX")]
+    [SerializeField] private AudioClip _deathSfx;
 
-    public UnityEvent[] OnStart;
-    public UnityEvent[] OnShoot;
-    public UnityEvent[] OnHurt;
-    public UnityEvent[] OnDeath;
+    [SerializeField]
+    private UnityEvent[] OnStart;
+    [SerializeField]
+    private UnityEvent[] OnShoot;
+    [SerializeField]
+    private UnityEvent[] OnHurt;
+    [SerializeField]
+    private UnityEvent[] OnDeath;
 
     //==== Hidden fields ====
     private int _currentHp = 0;
@@ -76,6 +81,5 @@ public class Ufo : MonoBehaviour
 
     private void Hurt()
     {
-
     }
 }

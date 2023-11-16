@@ -82,5 +82,14 @@ MonoBehaviour:
   _gameArea: {x: 10, y: 10}
   _ufoSize: {x: 1.001, y: 1.001}
   _ufoGo: {fileID: 6995596345171803104, guid: 10507db01d9909e459ddab3bacfec441, type: 3}
-  _initialSpeed: {x: 1, y: 1}
   _spawnStartDelay: 2
+  _movementEase: 1
+  _movementEaseOnUfoDeath: 1
+  _initialSpeed: 1
+  _speedIncrementAmount: 0.1
+  _movePauseDuration: 1
+  _bloodSplatter: {fileID: 4514514425614592534, guid: d5cc2a6758b28324c865f2a71ceef9b8, type: 3}
+  _bloodSplatterSize: 0.5
+  OnUfoDeath: []
+  OnUfoHurt: []
+  OnPlayerDeath: []
