@@ -10,6 +10,7 @@ namespace Guarana
         [SerializeField] private ParticleSystem[] _winds;
         [SerializeField] private ParticleSystem[] _playerFootSteps;
         [SerializeField] private PlayerController _playerController;
+        [SerializeField] private Canvas _canvas;
 
         void Start()
         {
@@ -36,6 +37,7 @@ namespace Guarana
             }
 
             _playerController.enabled = true;
+            _canvas.gameObject.SetActive(true);
         }
     }
 }
