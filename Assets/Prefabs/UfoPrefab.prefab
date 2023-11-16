@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 98
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 5118895561783656866}
   _bloodParticles:
   - {fileID: 8237402395430602250}
-  - {fileID: 3426507188759357122}
+  - {fileID: 0}
   _deathSfx: {fileID: 8300000, guid: a4b4d0aab194cac4d969c68b68a96afa, type: 3}
   OnStart: []
   OnShoot: []
@@ -283,11 +283,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c5991b8d7294d740a3d309bdb862419, type: 3}
---- !u!198 &3426507188759357122 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8375894222559613985, guid: 2c5991b8d7294d740a3d309bdb862419, type: 3}
-  m_PrefabInstance: {fileID: 6606852436176630499}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5045387092366473789 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2140495826661886174, guid: 2c5991b8d7294d740a3d309bdb862419, type: 3}
