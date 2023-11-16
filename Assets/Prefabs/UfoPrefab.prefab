@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hp: 2
-  _spriteRenderer: {fileID: 5118895561783656866}
+  _spriteGameObject: {fileID: 1206358590661733850}
   _bloodParticles:
   - {fileID: 8237402395430602250}
   - {fileID: 2145671269778475392}
