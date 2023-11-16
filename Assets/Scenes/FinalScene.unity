@@ -331,15 +331,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _ufoSize.x
-      value: 0.8
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _ufoSize.y
-      value: 0.8
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _gameArea.x
-      value: 12
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
+      propertyPath: _gameArea.y
+      value: 9.5
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _coloredUfos
@@ -355,11 +359,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _ufoZoneSize.x
-      value: 9.59
+      value: 4.79
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _ufoZoneSize.y
-      value: 4.7
+      value: 2.19
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _movePauseDuration
@@ -375,11 +379,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4328054332549985310, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.2049999
+      value: -1.605
       objectReference: {fileID: 0}
     - target: {fileID: 4328054332549985310, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.65
+      value: 3.655
       objectReference: {fileID: 0}
     - target: {fileID: 7611736653603858691, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: m_LocalPosition.x
