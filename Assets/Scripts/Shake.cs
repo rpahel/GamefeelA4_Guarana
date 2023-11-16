@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -9,7 +10,7 @@ public class Shake : MonoBehaviour
     [SerializeField]
     private AnimationCurve _curve;
 
-    private Vector2 _startPos;
+    private Vector3 _startPos;
     private Coroutine _shakeCoroutine = null;
 
     public void Start()
@@ -17,6 +18,7 @@ public class Shake : MonoBehaviour
         _startPos = transform.position;
     }
 
+    [Button]
     public void StartShake()
     {
         if(_shakeCoroutine != null)
@@ -38,7 +40,7 @@ public class Shake : MonoBehaviour
             {
                 elapsedTime += Time.deltaTime;
                 float strenght = _curve.Evaluate(elapsedTime / _duration);
-                transform.position = _startPos + Random.insideUnitCircle * strenght;
+                transform.position = _startPos + (Vector3)Random.insideUnitCircle * strenght;
                 yield return null;
             }
 
