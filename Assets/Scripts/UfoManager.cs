@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
@@ -52,15 +53,16 @@ namespace Guarana
         private UnityEvent[] OnPlayerDeath;
 
         //==== Fields ====
-        private int _nbOfAliveUfos = 0;
-        private int _currentWaypointIndex = 0;
-        private int _currentColumnsNb = 0;
-        private float _currentSpeed = 0f;
-        private Vector2[,] _ufoTiles = null;
-        private Vector2[] _wayPoints = null;
-        private Ufo[,] _ufos = null;
-        private Coroutine _movementCoroutine = null;
-        private Tweener _moveTween = null;
+        private int[] _nbOfAliveUfos;
+        private int _currentWaypointIndex;
+        private int _currentColumnsNb;
+        private float _currentSpeed;
+        private Vector2[,] _ufoTiles;
+        private Vector2[] _wayPoints;
+        private Vector2 _initialUfoZoneSize;
+        private Ufo[,] _ufos;
+        private Coroutine _movementCoroutine;
+        private Tweener _moveTween;
 
         //==== Properties ====
         public static bool IsPaused { get; set; }
@@ -71,6 +73,7 @@ namespace Guarana
         {
             IsPaused = true;
             _currentSpeed = _initialSpeed;
+            _initialUfoZoneSize = _ufoZoneSize;
 
             BoxCollider2D leftBoxCollider2D = null;
             BoxCollider2D rightBoxCollider2D = null;
@@ -162,24 +165,34 @@ namespace Guarana
         #endregion
 
         #region CUSTOM PUBLIC
-        public void UfoHasDied()
+        public void UfoHasDied(Ufo deadUfo)
         {
-            _nbOfAliveUfos--;
+            int index = GetColumnIndexOfUfo(deadUfo);
 
-            if (_nbOfAliveUfos <= 0)
-            {
-                // Win
-                return;
+            _nbOfAliveUfos[index]--;
+            
+            for (int i = 0; i < _nbOfAliveUfos.Length; i++)
+            { 
+                if (_nbOfAliveUfos[i] != 0)
+                    break;
+
+                if (i == _nbOfAliveUfos.Length - 1)
+                {
+                    // Win
+                    return;
+                }
             }
-
+            
             _currentSpeed += _speedIncrementAmount;
             StopCoroutine(_movementCoroutine);
             _movementCoroutine = null;
             _moveTween.Kill(false);
 
-
-            _ufoZoneSize -= new Vector2(_ufoSize.x, 0);
-            CalculateWaypoints();
+            if (HasLostAnExtremitiesColumn())
+            {
+                _ufoZoneSize = _initialUfoZoneSize - new Vector2(GetNumberOfExtremitiesColumnsThatDisappeared(), 0);
+                CalculateWaypoints();
+            }
 
             MoveTo(_currentWaypointIndex + 1, _movementEaseOnUfoDeath, false);
         }
@@ -265,8 +278,13 @@ namespace Guarana
                 }
             }
 
-            _nbOfAliveUfos = _ufos.GetLength(0) * _ufos.GetLength(1);
             _currentColumnsNb = _ufos.GetLength(0);
+            _nbOfAliveUfos = new int[_currentColumnsNb];
+            
+            for(int i = 0; i < _currentColumnsNb; i++)
+            {
+                _nbOfAliveUfos[i] = _ufos.GetLength(1);
+            }
         }
 
         private void HideUfos()
@@ -384,34 +402,64 @@ namespace Guarana
             yield break;
         }
 
-        private bool HasColumnsNbChanged(Ufo ufoThatJustDied)
+        private int GetColumnIndexOfUfo(Ufo ufoThatJustDied)
         {
-            int colIndex = -1;
             for (int j = 0; j < _ufos.GetLength(1); j++)
             {
                 for (int i = 0; i < _ufos.GetLength(0); i++)
                 {
-                    if (_ufos[i,j] == ufoThatJustDied)
-                    {
-                        colIndex = i;
-                        break;
-                    }
+                    if (_ufos[i, j] == ufoThatJustDied)
+                        return j % 2 == 0 ? i : Mathf.Abs(i - (_ufos.GetLength(0) - 1));
                 }
+            }
+            
+            return -1;
+        }
 
-                if (colIndex > -1)
+        private bool HasLostAnExtremitiesColumn()
+        {
+            for (int i = 0; i < _nbOfAliveUfos.Length; i++)
+            {
+                if (_nbOfAliveUfos[i] == 0)
+                {
+                    _nbOfAliveUfos[i] = -1;
+
+                    if ((i - 1) < 0 || (i + 1) >= _nbOfAliveUfos.Length) // Extremité
+                        return true;
+                        
+                    if (_nbOfAliveUfos[i - 1] <= 0 || _nbOfAliveUfos[i + 1] <= 0) // Fausse Extremité
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        private int GetNumberOfExtremitiesColumnsThatDisappeared()
+        {
+            int ret = 0;
+            // left to right
+            for (int i = 0; i < _nbOfAliveUfos.Length; i++)
+            {
+                if (_nbOfAliveUfos[i] <= 0)
+                    ret++;
+                else
                     break;
             }
 
-            if (colIndex == -1)
-                return false;
-
-            for (int j = 0; j < _ufos.GetLength(1); j++)
+            if (ret >= _nbOfAliveUfos.Length)
+                return _nbOfAliveUfos.Length;
+            
+            // right to left
+            for (int i = _nbOfAliveUfos.Length - 1; i >= 0; i--)
             {
-                if (!_ufos[colIndex, j].IsDead)
-                    return false;
+                if (_nbOfAliveUfos[i] <= 0)
+                    ret++;
+                else
+                    break;
             }
-
-            return true;
+            
+            return ret;
         }
     }
         #endregion

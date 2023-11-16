@@ -61,9 +61,8 @@ public class Ufo : MonoBehaviour
     private void Die()
     {
         _currentHp = 0;
-        UfoManager.UfoHasDied();
-
         _spriteGameObject.SetActive(false);
+
         GetComponent<Collider2D>().enabled = false;
 
         ServiceLocator.Get().PlaySound(_deathSfx);
@@ -74,6 +73,7 @@ public class Ufo : MonoBehaviour
         }
 
         IsDead = true;
+        UfoManager.UfoHasDied(this);
     }
 
     private void Hurt()
