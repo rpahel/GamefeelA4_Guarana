@@ -523,7 +523,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _movementEase
-      value: 27
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _ufoZoneSize.x
@@ -534,16 +534,20 @@ PrefabInstance:
       value: 2.19
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
+      propertyPath: _spawnStartDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _movePauseDuration
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _speedIncrementAmount
-      value: 0.025
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _movementEaseOnUfoDeath
-      value: 27
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4328054332549985310, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: m_LocalPosition.x
