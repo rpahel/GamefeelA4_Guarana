@@ -16,6 +16,8 @@ public class Ufo : MonoBehaviour
 
     [Header("Particles")]
     [SerializeField] private ParticleSystem[] _bloodParticles;
+    [SerializeField] private ParticleSystem _firstBloodParticles;
+    
 
     [Header("SFX")]
     [SerializeField] private AudioClip _deathSfx;
@@ -81,5 +83,6 @@ public class Ufo : MonoBehaviour
 
     private void Hurt()
     {
+        _firstBloodParticles.Play();
     }
 }
