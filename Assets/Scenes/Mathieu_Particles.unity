@@ -312,6 +312,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5833713636460673388, guid: 13dc233676c3208458b642068f56af3b, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6801588603429981758, guid: 13dc233676c3208458b642068f56af3b, type: 3}
+      propertyPath: TrailModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6801588603429981758, guid: 13dc233676c3208458b642068f56af3b, type: 3}
       propertyPath: TrailModule.lifetime.scalar
       value: 0.03
@@ -329,9 +337,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13dc233676c3208458b642068f56af3b, type: 3}
+--- !u!1001 &6854070641064093294
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2424024851273790414, guid: c83110eaaeeb48f45977e39e327518d7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.507649
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424024851273790414, guid: c83110eaaeeb48f45977e39e327518d7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2525719
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424024851273790414, guid: c83110eaaeeb48f45977e39e327518d7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.022415224
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424024851273790414, guid: c83110eaaeeb48f45977e39e327518d7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424024851273790414, guid: c83110eaaeeb48f45977e39e327518d7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424024851273790414, guid: c83110eaaeeb48f45977e39e327518d7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424024851273790414, guid: c83110eaaeeb48f45977e39e327518d7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424024851273790414, guid: c83110eaaeeb48f45977e39e327518d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424024851273790414, guid: c83110eaaeeb48f45977e39e327518d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424024851273790414, guid: c83110eaaeeb48f45977e39e327518d7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132456356139319703, guid: c83110eaaeeb48f45977e39e327518d7, type: 3}
+      propertyPath: m_Name
+      value: Brain Splash
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c83110eaaeeb48f45977e39e327518d7, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 42056380}
   - {fileID: 159018537777134724}
+  - {fileID: 6854070641064093294}
