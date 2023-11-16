@@ -173,7 +173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7650646481583522431, guid: ded70f5fa347fe740b3526014bebeace, type: 3}
       propertyPath: m_Name
-      value: Vent
+      value: VentDroit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -773,7 +773,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7650646481583522431, guid: ded70f5fa347fe740b3526014bebeace, type: 3}
       propertyPath: m_Name
-      value: Vent (1)
+      value: VentGauche
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
