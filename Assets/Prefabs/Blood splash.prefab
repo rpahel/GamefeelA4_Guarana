@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3261548868802452506}
   - component: {fileID: 6801588603429981758}
   - component: {fileID: 5833713636460673388}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Blood splash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3794,7 +3794,7 @@ ParticleSystem:
       serializedVersion: 2
       m_Bits: 64
     maxCollisionShapes: 256
-    quality: 2
+    quality: 0
     voxelSize: 0.5
     collisionMessages: 1
     collidesWithDynamic: 1

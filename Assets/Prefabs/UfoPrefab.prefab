@@ -245,6 +245,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6894197307158533279, guid: 7ea25227fe876f54e9906666c833b60d, type: 3}
+      propertyPath: emitterVelocityMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6894197307158533279, guid: 7ea25227fe876f54e9906666c833b60d, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
       value: -2.5
       objectReference: {fileID: 0}
@@ -332,6 +336,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3017799452710450409, guid: 2c5991b8d7294d740a3d309bdb862419, type: 3}
+      propertyPath: emitterVelocityMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3017799452710450409, guid: 2c5991b8d7294d740a3d309bdb862419, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
       value: -10
       objectReference: {fileID: 0}
@@ -341,6 +349,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5077445672074165091, guid: 2c5991b8d7294d740a3d309bdb862419, type: 3}
       propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5077445672074165091, guid: 2c5991b8d7294d740a3d309bdb862419, type: 3}
+      propertyPath: emitterVelocityMode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5077445672074165091, guid: 2c5991b8d7294d740a3d309bdb862419, type: 3}

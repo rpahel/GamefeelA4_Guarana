@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -63,6 +64,7 @@ namespace Guarana
         private Ufo[,] _ufos;
         private Coroutine _movementCoroutine;
         private Tweener _moveTween;
+        private ParticleSystem _lastParticleSystemThatCollidedWithThis;
 
         //==== Properties ====
         public static bool IsPaused { get; set; }
@@ -111,10 +113,21 @@ namespace Guarana
             MoveTo(_currentWaypointIndex + 1, _movementEase, true);
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnParticleCollision(GameObject other)
         {
-            Debug.Log(collision.ToString());
-            Debug.Log(collision.gameObject.ToString());
+            List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
+
+            if (_lastParticleSystemThatCollidedWithThis == null || _lastParticleSystemThatCollidedWithThis.gameObject != other)
+            {
+                _lastParticleSystemThatCollidedWithThis = other.GetComponent<ParticleSystem>();
+            }
+            
+            _lastParticleSystemThatCollidedWithThis.GetCollisionEvents(gameObject, collisionEvents);
+
+            foreach (var tg in collisionEvents)
+            {
+                Debug.DrawRay(tg.intersection, 2 * -tg.velocity.normalized, Color.magenta, 5);
+            }
         }
 
 #if UNITY_EDITOR
