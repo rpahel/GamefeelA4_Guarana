@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7611736653603858691}
   - component: {fileID: 3343773944382592582}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: UfoManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943da8c8b784df8458f4e95e67d33c9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coloredUfos: 0
   _ufoZone: {fileID: 4328054332549985310}
   _ufoZoneSize: {x: 8, y: 5}
   _gameArea: {x: 10, y: 10}
