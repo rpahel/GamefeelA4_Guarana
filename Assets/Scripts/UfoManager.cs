@@ -39,6 +39,10 @@ namespace Guarana
         private float _speedIncrementAmount = 0.1f;
         [SerializeField, Tooltip("Time the Ufos wait before moving again to the next waypoint.")]
         private float _movePauseDuration = 1f;
+        
+        [Header("Start Animation")]
+        [SerializeField] private float _startAnimationTime = 1f;
+        [SerializeField] private Ease _startAnimationEase = Ease.Linear;
 
         [Header("Effects")]
         [SerializeField, Tooltip("Blood splatter to spawn on wall.")]
@@ -100,7 +104,7 @@ namespace Guarana
 
             ShowUfoRows();
 
-            IsPaused = false;
+            StartCoroutine(StartAnimationCoroutine());
         }
 
         private void Update()
@@ -460,6 +464,16 @@ namespace Guarana
             }
             
             return ret;
+        }
+
+        private IEnumerator StartAnimationCoroutine()
+        {
+            transform.position = new Vector3(0f, 5f, 0f);
+            transform.DOMoveY(0, _startAnimationTime).SetEase(_startAnimationEase);
+
+            yield return new WaitForSeconds(_startAnimationTime);
+
+            IsPaused = false;
         }
     }
         #endregion
