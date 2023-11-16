@@ -23,6 +23,7 @@ public class Ufo : MonoBehaviour
     //==== Hidden fields ====
     private int _currentHp = 0;
     public UfoManager UfoManager { get; set; }
+    public bool IsDead { get; private set; }
 
     //==== Public methods ====
     public void TakeDamage(int damage)
@@ -42,6 +43,7 @@ public class Ufo : MonoBehaviour
     private void Awake()
     {
         _currentHp = _hp;
+        IsDead = false;
     }
 
     //==== Private methods ====
@@ -50,6 +52,18 @@ public class Ufo : MonoBehaviour
         _currentHp = 0;
         gameObject.SetActive(false);
         UfoManager.UfoHasDied();
+
+        _spriteRenderer.gameObject.SetActive(false);
+        GetComponent<Collider2D>().enabled = false;
+
+        ServiceLocator.Get().PlaySound(_deathSfx);
+
+        for (int i = 0; i < _bloodParticles.Length; i++)
+        {
+            _bloodParticles[i].Play();
+        }
+
+        IsDead = true;
     }
 
     private void Hurt()

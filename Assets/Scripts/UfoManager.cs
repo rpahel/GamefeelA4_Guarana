@@ -52,15 +52,16 @@ namespace Guarana
         //==== Fields ====
         private int _nbOfAliveUfos = 0;
         private int _currentWaypointIndex = 0;
+        private int _currentColumnsNb = 0;
         private float _currentSpeed = 0f;
         private Vector2[,] _ufoTiles = null;
         private Vector2[] _wayPoints = null;
-        private Ufo[] _ufos = null;
+        private Ufo[,] _ufos = null;
         private Coroutine _movementCoroutine = null;
         private Tweener _moveTween = null;
 
         //==== Properties ====
-        public static bool IsPaused { get; set;  }
+        public static bool IsPaused { get; set; }
 
         //==== Methods ====
         #region UNITY FUNCTIONS
@@ -87,9 +88,9 @@ namespace Guarana
 
         private void Update()
         {
-            if(IsPaused)
+            if (IsPaused)
                 return;
-            
+
             MoveTo(_currentWaypointIndex + 1, _movementEase, true);
         }
 
@@ -115,7 +116,10 @@ namespace Guarana
             Gizmos.DrawWireCube(_ufoZone.position, _ufoZoneSize);
 
             if (UnityEditor.EditorApplication.isPlaying)
+            {
+                DrawPath();
                 return;
+            }
 
             PinUfoZoneToTopLeft();
 
@@ -123,7 +127,7 @@ namespace Guarana
             Gizmos.color = Color.cyan;
             for (int i = 0; i < _ufoTiles.GetLength(0); i++)
             {
-                for(int j = 0; j < _ufoTiles.GetLength(1); j++)
+                for (int j = 0; j < _ufoTiles.GetLength(1); j++)
                 {
                     Gizmos.DrawWireCube(_ufoTiles[i, j], _ufoSize);
                 }
@@ -142,7 +146,7 @@ namespace Guarana
         {
             _nbOfAliveUfos--;
 
-            if(_nbOfAliveUfos <= 0)
+            if (_nbOfAliveUfos <= 0)
             {
                 // Win
                 return;
@@ -152,6 +156,10 @@ namespace Guarana
             StopCoroutine(_movementCoroutine);
             _movementCoroutine = null;
             _moveTween.Kill(false);
+
+
+            _ufoZoneSize -= new Vector2(_ufoSize.x, 0);
+            CalculateWaypoints();
 
             MoveTo(_currentWaypointIndex + 1, _movementEaseOnUfoDeath, false);
         }
@@ -181,8 +189,8 @@ namespace Guarana
             float leftOverX = _ufoZoneSize.x - possibleNbOfUfos.x * _ufoSize.x;
             float leftOverY = _ufoZoneSize.y - possibleNbOfUfos.y * _ufoSize.y;
 
-            if(leftOverX < 0) leftOverX = 0;
-            if(leftOverY < 0) leftOverY = 0;
+            if (leftOverX < 0) leftOverX = 0;
+            if (leftOverY < 0) leftOverY = 0;
 
             float paddingX = leftOverX / (possibleNbOfUfos.x + 1);
             float paddingY = leftOverY / (possibleNbOfUfos.y + 1);
@@ -201,9 +209,9 @@ namespace Guarana
                 for (int i = 0; i < possibleNbOfUfos.x; i++)
                 {
                     // ZigZag (Vers la droite puis vers la gauche)
-                    if(i == 0)
+                    if (i == 0)
                     {
-                        if(j % 2 == 0)
+                        if (j % 2 == 0)
                             newX = start.x + paddingX + _ufoSize.x * .5f;
                         else
                             newX = start.x + _ufoZoneSize.x - (paddingX + _ufoSize.x * .5f);
@@ -220,13 +228,11 @@ namespace Guarana
                 }
             }
         }
-        
+
         private void SpawnUfos()
         {
-            int arraySize = (_ufoTiles.GetLength(0) * _ufoTiles.GetLength(1));
-            _ufos = new Ufo[arraySize];
+            _ufos = new Ufo[_ufoTiles.GetLength(0), _ufoTiles.GetLength(1)];
 
-            int a = 0;
             for (int j = 0; j < _ufoTiles.GetLength(1); j++)
             {
                 for (int i = 0; i < _ufoTiles.GetLength(0); i++)
@@ -241,36 +247,32 @@ namespace Guarana
                         ufo.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.blue, Color.red, (float)a / arraySize);
 #endif
 
-                    _ufos[a] = ufo;
-                    a++;
+                    _ufos[i, j] = ufo;
                 }
             }
 
-            _nbOfAliveUfos = _ufos.Length;
+            _nbOfAliveUfos = _ufos.GetLength(0) * _ufos.GetLength(1);
+            _currentColumnsNb = _ufos.GetLength(0);
         }
 
         private void HideUfos()
         {
-            int a = 0;
             for (int j = 0; j < _ufoTiles.GetLength(1); j++)
             {
                 for (int i = 0; i < _ufoTiles.GetLength(0); i++)
                 {
-                    _ufos[a].gameObject.SetActive(false);
-                    a++;
+                    _ufos[i, j].gameObject.SetActive(false);
                 }
             }
         }
 
         private void ShowUfoRows()
         {
-            int a = 0;
             for (int j = 0; j < _ufoTiles.GetLength(1); j++)
             {
                 for (int i = 0; i < _ufoTiles.GetLength(0); i++)
                 {
-                    _ufos[a].gameObject.SetActive(true);
-                    a++;
+                    _ufos[i, j].gameObject.SetActive(true);
                 }
             }
         }
@@ -285,18 +287,18 @@ namespace Guarana
             float waypointX = 0;
             float waypointY = 0;
             int n = 0;
-            for(int j = 0; j < fitY * .5f; j++)
+            for (int j = 0; j < fitY * .5f; j++)
             {
                 waypointY = transform.position.y + .5f * (_gameArea.y - _ufoZoneSize.y) - j * _ufoSize.y;
 
                 for (int i = 0; i < 2; i++)
                 {
-                    if(j % 2 == 0)
+                    if (j % 2 == 0)
                         waypointX = transform.position.x + .5f * (_ufoZoneSize.x - _gameArea.x) + i * (_gameArea.x - _ufoZoneSize.x);
                     else
                         waypointX = transform.position.x - .5f * (_ufoZoneSize.x - _gameArea.x) - i * (_gameArea.x - _ufoZoneSize.x);
 
-                    _wayPoints[n] = new Vector2 (waypointX, waypointY);
+                    _wayPoints[n] = new Vector2(waypointX, waypointY);
                     n++;
                 }
             }
@@ -310,13 +312,13 @@ namespace Guarana
 #if UNITY_EDITOR
         private void DrawPath()
         {
-            for(int i = 0; i < _wayPoints.Length - 1; i++)
+            for (int i = 0; i < _wayPoints.Length - 1; i++)
             {
                 Gizmos.DrawWireSphere(_wayPoints[i], .2f);
                 Gizmos.DrawLine(_wayPoints[i], _wayPoints[i + 1]);
 
-                if(i == _wayPoints.Length - 2)
-                    Gizmos.DrawWireSphere(_wayPoints[i+1], .2f);
+                if (i == _wayPoints.Length - 2)
+                    Gizmos.DrawWireSphere(_wayPoints[i + 1], .2f);
             }
         }
 #endif
@@ -338,7 +340,7 @@ namespace Guarana
 
         private IEnumerator MoveToCoroutine(Vector2 target, Ease ease, bool waitPauseDuration)
         {
-            if(waitPauseDuration)
+            if (waitPauseDuration)
             {
                 float wait = _movePauseDuration;
 
@@ -358,12 +360,42 @@ namespace Guarana
 
             yield return _moveTween.WaitForKill();
 
-            if(completed)
+            if (completed)
                 _currentWaypointIndex++;
 
             _movementCoroutine = null;
             yield break;
         }
-        #endregion
+
+        private bool HasColumnsNbChanged(Ufo ufoThatJustDied)
+        {
+            int colIndex = -1;
+            for (int j = 0; j < _ufos.GetLength(1); j++)
+            {
+                for (int i = 0; i < _ufos.GetLength(0); i++)
+                {
+                    if (_ufos[i,j] == ufoThatJustDied)
+                    {
+                        colIndex = i;
+                        break;
+                    }
+                }
+
+                if (colIndex > -1)
+                    break;
+            }
+
+            if (colIndex == -1)
+                return false;
+
+            for (int j = 0; j < _ufos.GetLength(1); j++)
+            {
+                if (!_ufos[colIndex, j].IsDead)
+                    return false;
+            }
+
+            return true;
+        }
     }
+        #endregion
 }
