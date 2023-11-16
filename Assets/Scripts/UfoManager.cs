@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -23,6 +24,9 @@ namespace Guarana
         private Vector2 _gameArea = Vector2.zero;
         [SerializeField, Tooltip("Size of one UFO.")]
         private Vector2 _ufoSize = Vector2.one;
+
+        [SerializeField] private TextMeshProUGUI _scoreText;
+        [SerializeField] private ParticleSystem[] _scoreParticles;
 
         [Header("Gameplay values")]
         [SerializeField, Tooltip("UFO GameObject.")]
@@ -67,6 +71,7 @@ namespace Guarana
         private Ufo[,] _ufos;
         private Coroutine _movementCoroutine;
         private Tweener _moveTween;
+        private int _score;
 
         //==== Properties ====
         public static bool IsPaused { get; set; }
@@ -174,7 +179,15 @@ namespace Guarana
             int index = GetColumnIndexOfUfo(deadUfo);
 
             _nbOfAliveUfos[index]--;
-            
+
+            _score += 100;
+            _scoreText.text = _score.ToString();
+
+            for (int i = 0; i < _scoreParticles.Length; i++)
+            {
+                _scoreParticles[i].Play();
+            }
+
             for (int i = 0; i < _nbOfAliveUfos.Length; i++)
             { 
                 if (_nbOfAliveUfos[i] != 0)
