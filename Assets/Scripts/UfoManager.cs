@@ -1,8 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
-using DG.Tweening.Plugins.Options;
-using static UnityEngine.GraphicsBuffer;
+using UnityEngine.Events;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -44,6 +43,11 @@ namespace Guarana
         private float _speedIncrementAmount = 0.1f;
         [SerializeField, Tooltip("Time the Ufos wait before moving again to the next waypoint.")]
         private float _movePauseDuration = 1f;
+
+        [Header("Effects")]
+        public UnityEvent[] OnUfoDeath;
+        public UnityEvent[] OnUfoHurt;
+        public UnityEvent[] OnPlayerDeath;
 
         //==== Fields ====
         private int _nbOfAliveUfos = 0;
