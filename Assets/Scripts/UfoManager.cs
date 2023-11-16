@@ -12,12 +12,6 @@ namespace Guarana
     public class UfoManager : MonoBehaviour
     {
         //==== Exposed Fields ====
-#if UNITY_EDITOR
-        [Header("Debug")]
-        [SerializeField, Tooltip("Colorize enemies so it shows as a gradient from blue to red.")]
-        private bool _coloredUfos = false;
-#endif
-
         [Header("Set Up")]
         [SerializeField, Tooltip("The zone the UFOs are contained in.")]
         private Transform _ufoZone = null;
@@ -241,12 +235,6 @@ namespace Guarana
                     ufo.transform.localScale = _ufoSize;
                     ufo.UfoManager = this;
 
-#if UNITY_EDITOR
-                    // Juste pour test
-                    if (_coloredUfos)
-                        ufo.GetComponent<SpriteRenderer>().color = Color.Lerp(Color.blue, Color.red, (float)a / arraySize);
-#endif
-
                     _ufos[i, j] = ufo;
                 }
             }
@@ -284,15 +272,18 @@ namespace Guarana
             if (_wayPoints == null || _wayPoints.Length != fitY)
                 _wayPoints = new Vector2[fitY];
 
-            float waypointX = 0;
-            float waypointY = 0;
+            
             int n = 0;
             for (int j = 0; j < fitY * .5f; j++)
             {
+                float waypointY = 0;
+                
                 waypointY = transform.position.y + .5f * (_gameArea.y - _ufoZoneSize.y) - j * _ufoSize.y;
 
                 for (int i = 0; i < 2; i++)
                 {
+                    float waypointX = 0;
+                    
                     if (j % 2 == 0)
                         waypointX = transform.position.x + .5f * (_ufoZoneSize.x - _gameArea.x) + i * (_gameArea.x - _ufoZoneSize.x);
                     else

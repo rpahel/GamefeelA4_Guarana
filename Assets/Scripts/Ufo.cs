@@ -1,6 +1,7 @@
 using Guarana;
 using System.Collections;
 using System.Collections.Generic;
+using Guarana.Interfaces;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,10 +11,16 @@ public class Ufo : MonoBehaviour
     [SerializeField]
     private int _hp = 2;
 
-    [SerializeField] private GameObject _spriteGameObject;
+    [SerializeField]
+    private GameObject _spriteGameObject;
 
     [Header("Particles")]
-    [SerializeField] private ParticleSystem _bloodParticles;
+    [SerializeField]
+    private ParticleSystem[] _bloodParticles;
+
+    [Header("Sfx")]
+    [SerializeField]
+    private AudioClip _deathSfx;
 
     public UnityEvent[] OnStart;
     public UnityEvent[] OnShoot;
@@ -53,7 +60,7 @@ public class Ufo : MonoBehaviour
         gameObject.SetActive(false);
         UfoManager.UfoHasDied();
 
-        _spriteRenderer.gameObject.SetActive(false);
+        _spriteGameObject.SetActive(false);
         GetComponent<Collider2D>().enabled = false;
 
         ServiceLocator.Get().PlaySound(_deathSfx);
