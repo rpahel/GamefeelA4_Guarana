@@ -1,34 +1,49 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class Shake : MonoBehaviour {
-    public bool start = false;
-    public float duration = 1f;
-    public AnimationCurve curve;
-    // Start is called before the first frame update
+public class Shake : MonoBehaviour
+{
+    [SerializeField]
+    private float _duration = 1f;
+    [SerializeField]
+    private AnimationCurve _curve;
 
-    // Update is called once per frame
-    void Update() { 
-        if (start) {
-            start = false;
-            StartCoroutine(Shaking());
-        }
+    private Vector2 _startPos;
+    private Coroutine _shakeCoroutine = null;
+
+    public void Start()
+    {
+        _startPos = transform.position;
     }
 
-    IEnumerator Shaking()
+    public void StartShake()
+    {
+        if(_shakeCoroutine != null)
         {
-            Vector3 startPosition = transform.position;
+            StopCoroutine(_shakeCoroutine);
+            _shakeCoroutine = null;
+        }
+
+        transform.position = _startPos;
+        StartCoroutine(Shaking());
+    }
+
+    private IEnumerator Shaking()
+    {
+        {
             float elapsedTime = 0f;
 
-            while (elapsedTime < duration)
+            while (elapsedTime < _duration)
             {
                 elapsedTime += Time.deltaTime;
-                float strenght = curve.Evaluate(elapsedTime / duration);
-                transform.position = startPosition + Random.insideUnitSphere * strenght;
+                float strenght = _curve.Evaluate(elapsedTime / _duration);
+                transform.position = _startPos + Random.insideUnitCircle * strenght;
                 yield return null;
             }
-            transform.position -= startPosition;
+
+            transform.position = _startPos;
+        }
     }
 
 }
