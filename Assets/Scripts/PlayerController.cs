@@ -113,8 +113,6 @@ namespace Guarana
 
             if( _hp <= 0 )
             {
-                col.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, 1);
-            
                 ServiceLocator.Get().PlaySound(_gameOverSfx);
                 _gameOverVfx.Play();
                 _shake.StartShake();

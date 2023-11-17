@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1738069926598535472}
   - component: {fileID: 1591815810449710893}
   - component: {fileID: 6282443130883093249}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RightFootStepParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4842,7 +4842,7 @@ GameObject:
   - component: {fileID: 9055734863878343797}
   - component: {fileID: 7493134342068932514}
   - component: {fileID: 2328963081130443180}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4908,6 +4908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 5
+  _hp: 0
   _projectile: {fileID: 3548914919344259312, guid: 645c5aa8e0d054c4da018cb732e10b84, type: 3}
   _projectileSpeed: 10
   _shootCooldown: 0.5
@@ -4973,7 +4974,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8962533118384634315}
   - component: {fileID: 3603447819010298331}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5058,7 +5059,7 @@ GameObject:
   - component: {fileID: 8122613018731629073}
   - component: {fileID: 1891636028322946482}
   - component: {fileID: 3641846921415594744}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftFootStepParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9888,6 +9889,10 @@ PrefabInstance:
     - target: {fileID: 2833574877347592740, guid: 13dc233676c3208458b642068f56af3b, type: 3}
       propertyPath: m_Name
       value: Blood splash
+      objectReference: {fileID: 0}
+    - target: {fileID: 2833574877347592740, guid: 13dc233676c3208458b642068f56af3b, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3261548868802452506, guid: 13dc233676c3208458b642068f56af3b, type: 3}
       propertyPath: m_LocalPosition.x

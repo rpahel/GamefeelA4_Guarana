@@ -493,9 +493,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7493134342068932514, guid: 1b497d78d45164343a510f59c8993640, type: 3}
+      propertyPath: _hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493134342068932514, guid: 1b497d78d45164343a510f59c8993640, type: 3}
       propertyPath: _shake
       value: 
       objectReference: {fileID: 876681230}
+    - target: {fileID: 7493134342068932514, guid: 1b497d78d45164343a510f59c8993640, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7493134342068932514, guid: 1b497d78d45164343a510f59c8993640, type: 3}
       propertyPath: _startManager
       value: 
