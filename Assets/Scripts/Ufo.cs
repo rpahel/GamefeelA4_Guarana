@@ -165,7 +165,7 @@ public class Ufo : MonoBehaviour
 
     private void Shoot()
     {
-        if (IsDead)
+        if (IsDead || !FeedbackManager.EnemyCanShoot)
             return;
 
         if (Random.Range(0, _randomRange) != 0)

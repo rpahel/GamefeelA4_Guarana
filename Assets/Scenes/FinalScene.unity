@@ -1371,6 +1371,7 @@ MonoBehaviour:
   _windFootSteps: 51
   _music: 52
   _score: 53
+  _enemyCanShoot: 54
   _BGs:
   - {fileID: 1809210416}
   - {fileID: 1085117119}

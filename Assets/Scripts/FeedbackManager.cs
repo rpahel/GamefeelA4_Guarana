@@ -16,6 +16,7 @@ namespace Guarana
      [SerializeField] private KeyCode _windFootSteps;
      [SerializeField] private KeyCode _music;
      [SerializeField] private KeyCode _score;
+     [SerializeField] private KeyCode _enemyCanShoot;
      
      [SerializeField] private Background[] _BGs;
      [SerializeField] private ParticleSystem[] _winds;
@@ -32,6 +33,7 @@ namespace Guarana
      public static bool WindFootSteps;
      public static bool Music;
      public static bool Score;
+     public static bool EnemyCanShoot;
      public static bool StartAnimation;
      
      #endregion
@@ -97,6 +99,10 @@ namespace Guarana
                  _scoreText.DOColor(new Color(1f, 0.5424528f, 0.9089146f), 0.5f);
                  _scoreText.font = _cuteFont;
              }
+         }
+         if (Input.GetKeyDown(_enemyCanShoot))
+         {
+             EnemyCanShoot = !EnemyCanShoot;
          }
      }
  
