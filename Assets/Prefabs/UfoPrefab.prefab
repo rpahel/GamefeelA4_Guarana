@@ -107,8 +107,8 @@ MonoBehaviour:
   _firstBloodParticles: {fileID: 616258800097754201}
   _deathSfx: {fileID: 8300000, guid: a4b4d0aab194cac4d969c68b68a96afa, type: 3}
   _criStart: {fileID: 8300000, guid: cbe10f76d45fc3946bba193db11b2d2e, type: 3}
-  _score: {fileID: 0}
   _font: {fileID: 11400000, guid: 9ffe1d9f7cd10094397242ef1e1a2d19, type: 2}
+  _creepyMusic: {fileID: 8300000, guid: 5b19d4df4bcec4947a86fb2f195691bb, type: 3}
   OnStart: []
   OnShoot: []
   OnHurt: []

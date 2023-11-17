@@ -29,6 +29,7 @@ public class Ufo : MonoBehaviour
     [SerializeField] private AudioClip _criStart;
     public static TextMeshProUGUI _score;
     [SerializeField] private TMP_FontAsset _font;
+    [SerializeField] private AudioClip _creepyMusic;
 
     [SerializeField]
     private UnityEvent[] OnStart;
@@ -104,6 +105,7 @@ public class Ufo : MonoBehaviour
             _firstHurt = true;
             _score.DOColor(new Color(1f, 0f, 0f), 0.5f);
             _score.font = _font;
+            ServiceLocator.Get().ChangeMusic(_creepyMusic);
         }
         
         if (_hasAttacked)

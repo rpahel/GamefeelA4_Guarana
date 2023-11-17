@@ -644,7 +644,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 20.48, y: 20.48}
+    oldSize: {x: 11.377778, y: 11.377778}
     newSize: {x: 20.48, y: 20.48}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -975,7 +975,7 @@ MonoBehaviour:
   - {fileID: 11207161}
   _playerController: {fileID: 56923255}
   _canvas: {fileID: 1354974209}
-  _music: {fileID: 8300000, guid: 5b19d4df4bcec4947a86fb2f195691bb, type: 3}
+  _music: {fileID: 8300000, guid: 112d95b2d4151a64cb940601469976d1, type: 3}
   _chromaticAberation: {fileID: 497474067}
 --- !u!1 &1568375829
 GameObject:
@@ -1385,7 +1385,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 20.48, y: 20.48}
+    oldSize: {x: 11.377778, y: 11.377778}
     newSize: {x: 20.48, y: 20.48}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
