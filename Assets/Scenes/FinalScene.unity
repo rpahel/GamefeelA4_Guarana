@@ -201,7 +201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6894197307158533279, guid: 7ea25227fe876f54e9906666c833b60d, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -448,29 +448,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 911420160863864928, guid: 1b497d78d45164343a510f59c8993640, type: 3}
-      propertyPath: looping
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 911420160863864928, guid: 1b497d78d45164343a510f59c8993640, type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 942452707596524849, guid: 1b497d78d45164343a510f59c8993640, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1060111460287650049, guid: 1b497d78d45164343a510f59c8993640, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2328963081130443180, guid: 1b497d78d45164343a510f59c8993640, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2328963081130443180, guid: 1b497d78d45164343a510f59c8993640, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2356784397654706134, guid: 1b497d78d45164343a510f59c8993640, type: 3}
       propertyPath: m_LocalPosition.x
@@ -517,43 +497,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 876681230}
     - target: {fileID: 7493134342068932514, guid: 1b497d78d45164343a510f59c8993640, type: 3}
-      propertyPath: _shootSfx
-      value: 
-      objectReference: {fileID: 8300000, guid: 6369c40379969994ebf6160b04b2e826, type: 3}
-    - target: {fileID: 7493134342068932514, guid: 1b497d78d45164343a510f59c8993640, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7493134342068932514, guid: 1b497d78d45164343a510f59c8993640, type: 3}
-      propertyPath: _gameOverSfx
-      value: 
-      objectReference: {fileID: 8300000, guid: 1c75d5fc76972b54c84d4d3bf4b93a04, type: 3}
-    - target: {fileID: 7493134342068932514, guid: 1b497d78d45164343a510f59c8993640, type: 3}
-      propertyPath: _gameOverVfx
-      value: 
-      objectReference: {fileID: 751133808}
-    - target: {fileID: 7493134342068932514, guid: 1b497d78d45164343a510f59c8993640, type: 3}
       propertyPath: _startManager
       value: 
       objectReference: {fileID: 1507391424}
-    - target: {fileID: 7493134342068932514, guid: 1b497d78d45164343a510f59c8993640, type: 3}
-      propertyPath: _shootCooldown
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9130250683618828577, guid: 1b497d78d45164343a510f59c8993640, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b497d78d45164343a510f59c8993640, type: 3}
---- !u!198 &751133808 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 911420160863864928, guid: 1b497d78d45164343a510f59c8993640, type: 3}
-  m_PrefabInstance: {fileID: 751133807}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &839409036
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,7 +644,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.377778, y: 11.377778}
+    oldSize: {x: 20.48, y: 20.48}
     newSize: {x: 20.48, y: 20.48}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -844,7 +795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6894197307158533279, guid: 7ea25227fe876f54e9906666c833b60d, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1095,8 +1046,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
-  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+    rgba: 4293430015
+  m_fontColor: {r: 1, g: 0.5424528, b: 0.90891457, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1282,7 +1233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6894197307158533279, guid: 7ea25227fe876f54e9906666c833b60d, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1434,7 +1385,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.377778, y: 11.377778}
+    oldSize: {x: 20.48, y: 20.48}
     newSize: {x: 20.48, y: 20.48}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

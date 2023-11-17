@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1738069926598535472
 Transform:
   m_ObjectHideFlags: 0
@@ -4902,7 +4902,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1060111460287650049}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 38c852228eaa8cf469653ea22757d54f, type: 3}
   m_Name: 
@@ -4910,10 +4910,11 @@ MonoBehaviour:
   _moveSpeed: 5
   _projectile: {fileID: 3548914919344259312, guid: 645c5aa8e0d054c4da018cb732e10b84, type: 3}
   _projectileSpeed: 10
-  _shootCooldown: 0.2
-  _shootSfxs: []
-  _gameOverSfx: {fileID: 0}
-  _gameOverVfx: {fileID: 0}
+  _shootCooldown: 0.5
+  _shootSfx: {fileID: 8300000, guid: 6369c40379969994ebf6160b04b2e826, type: 3}
+  _gameOverSfx: {fileID: 8300000, guid: 1c75d5fc76972b54c84d4d3bf4b93a04, type: 3}
+  _gameOverVfx: {fileID: 911420160863864928}
+  _criStart: {fileID: 8300000, guid: cbe10f76d45fc3946bba193db11b2d2e, type: 3}
   _shake: {fileID: 0}
   _startManager: {fileID: 0}
 --- !u!61 &2328963081130443180
@@ -4948,7 +4949,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.15}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5062,7 +5063,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8122613018731629073
 Transform:
   m_ObjectHideFlags: 0
@@ -9928,6 +9929,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6801588603429981758, guid: 13dc233676c3208458b642068f56af3b, type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6801588603429981758, guid: 13dc233676c3208458b642068f56af3b, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6801588603429981758, guid: 13dc233676c3208458b642068f56af3b, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
       value: 40
       objectReference: {fileID: 0}
@@ -9940,6 +9949,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13dc233676c3208458b642068f56af3b, type: 3}
+--- !u!198 &911420160863864928 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6801588603429981758, guid: 13dc233676c3208458b642068f56af3b, type: 3}
+  m_PrefabInstance: {fileID: 5963358555596752478}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9187697732346550852 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3261548868802452506, guid: 13dc233676c3208458b642068f56af3b, type: 3}

@@ -109,6 +109,8 @@ namespace Guarana
 
             ShowUfoRows();
 
+            Ufo._score = _scoreText;
+
             StartCoroutine(StartAnimationCoroutine());
         }
 

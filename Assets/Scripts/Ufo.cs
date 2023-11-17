@@ -1,5 +1,7 @@
+using DG.Tweening;
 using Guarana;
 using Guarana.Interfaces;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,6 +26,9 @@ public class Ufo : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField] private AudioClip _deathSfx;
+    [SerializeField] private AudioClip _criStart;
+    public static TextMeshProUGUI _score;
+    [SerializeField] private TMP_FontAsset _font;
 
     [SerializeField]
     private UnityEvent[] OnStart;
@@ -41,6 +46,8 @@ public class Ufo : MonoBehaviour
     
     private bool _hasAttacked;
     private bool _isHurt;
+
+    private static bool _firstHurt;
 
     //==== Public methods ====
     public void TakeDamage(int damage)
@@ -90,6 +97,14 @@ public class Ufo : MonoBehaviour
     {
         _firstBloodParticles.Play();
         _isHurt = true;
+        
+        if (!_firstHurt)
+        {
+            ServiceLocator.Get().PlaySound(_criStart);
+            _firstHurt = true;
+            _score.DOColor(new Color(1f, 0f, 0f), 0.5f);
+            _score.font = _font;
+        }
         
         if (_hasAttacked)
         {

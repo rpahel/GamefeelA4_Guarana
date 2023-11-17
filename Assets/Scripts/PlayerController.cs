@@ -28,6 +28,7 @@ namespace Guarana
 
         private float _shootCooldownTimer;
         private bool _tryToShoot;
+        private bool _firstShoot;
 
         #endregion
 
@@ -84,7 +85,7 @@ namespace Guarana
                 _shootCooldownTimer = _shootCooldown;
                 
                 ServiceLocator.Get().PlaySound(_shootSfx);
-                
+
                 playerShot?.Invoke();
             }
 
