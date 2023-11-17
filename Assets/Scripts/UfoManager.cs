@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,6 +26,9 @@ namespace Guarana
         [SerializeField, Tooltip("Size of one UFO.")]
         private Vector2 _ufoSize = Vector2.one;
 
+        [SerializeField] private TextMeshProUGUI _scoreText;
+        [SerializeField] private ParticleSystem[] _scoreParticles;
+
         [Header("Gameplay values")]
         [SerializeField, Tooltip("UFO GameObject.")]
         private GameObject _ufoGo = null;
@@ -40,6 +44,10 @@ namespace Guarana
         private float _speedIncrementAmount = 0.1f;
         [SerializeField, Tooltip("Time the Ufos wait before moving again to the next waypoint.")]
         private float _movePauseDuration = 1f;
+        
+        [Header("Start Animation")]
+        [SerializeField] private float _startAnimationTime = 1f;
+        [SerializeField] private Ease _startAnimationEase = Ease.Linear;
 
         [Header("Effects")]
         [SerializeField, Tooltip("Blood splatter to spawn on wall.")]
@@ -65,6 +73,7 @@ namespace Guarana
         private Coroutine _movementCoroutine;
         private Tweener _moveTween;
         private ParticleSystem _lastParticleSystemThatCollidedWithThis;
+        private int _score;
 
         //==== Properties ====
         public static bool IsPaused { get; set; }
@@ -102,7 +111,9 @@ namespace Guarana
 
             ShowUfoRows();
 
-            IsPaused = false;
+            Ufo._score = _scoreText;
+
+            StartCoroutine(StartAnimationCoroutine());
         }
 
         private void Update()
@@ -183,7 +194,15 @@ namespace Guarana
             int index = GetColumnIndexOfUfo(deadUfo);
 
             _nbOfAliveUfos[index]--;
-            
+
+            _score += 100;
+            _scoreText.text = _score.ToString();
+
+            for (int i = 0; i < _scoreParticles.Length; i++)
+            {
+                _scoreParticles[i].Play();
+            }
+
             for (int i = 0; i < _nbOfAliveUfos.Length; i++)
             { 
                 if (_nbOfAliveUfos[i] != 0)
@@ -506,6 +525,16 @@ namespace Guarana
             }
             
             return (retL, retR);
+        }
+
+        private IEnumerator StartAnimationCoroutine()
+        {
+            transform.position = new Vector3(0f, 5f, 0f);
+            transform.DOMoveY(0, _startAnimationTime).SetEase(_startAnimationEase);
+
+            yield return new WaitForSeconds(_startAnimationTime);
+
+            IsPaused = false;
         }
     }
         #endregion

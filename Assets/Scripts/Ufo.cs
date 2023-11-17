@@ -1,8 +1,7 @@
+using DG.Tweening;
 using Guarana;
-using System.Collections;
-using System.Collections.Generic;
 using Guarana.Interfaces;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,6 +21,15 @@ public class Ufo : MonoBehaviour
     private float _bulletspeed;
     [SerializeField]
     private int _randomRange;
+    
+    [Header("Sprites")]
+    [SerializeField] private SpriteRenderer _faceSpriteRenderer;
+    [SerializeField] private SpriteRenderer _leftEarSpriteRenderer;
+    [SerializeField] private SpriteRenderer _rightEarSpriteRenderer;
+    [SerializeField] private Sprite _idleHurt;
+    [SerializeField] private Sprite _attack;
+    [SerializeField] private Sprite _attackHurt;
+    [SerializeField] private Animator _animator;
 
     [Header("Particles")]
     [SerializeField] private ParticleSystem[] _bloodParticles;
@@ -29,6 +37,10 @@ public class Ufo : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField] private AudioClip _deathSfx;
+    [SerializeField] private AudioClip _criStart;
+    public static TextMeshProUGUI _score;
+    [SerializeField] private TMP_FontAsset _font;
+    [SerializeField] private AudioClip _creepyMusic;
 
     [SerializeField]
     private UnityEvent[] OnStart;
@@ -43,6 +55,11 @@ public class Ufo : MonoBehaviour
     private int _currentHp = 0;
     public UfoManager UfoManager { get; set; }
     public bool IsDead { get; private set; }
+    
+    private bool _hasAttacked;
+    private bool _isHurt;
+
+    private static bool _firstHurt;
 
     //==== Public methods ====
     public void TakeDamage(int damage)
@@ -74,9 +91,13 @@ public class Ufo : MonoBehaviour
     private void Die()
     {
         _currentHp = 0;
-        _spriteGameObject.SetActive(false);
 
         GetComponent<Collider2D>().enabled = false;
+        _faceSpriteRenderer.color = Color.clear;
+        _rightEarSpriteRenderer.color = Color.clear;
+        _leftEarSpriteRenderer.color = Color.clear;
+        
+        _animator.SetTrigger("death");
 
         ServiceLocator.Get().PlaySound(_deathSfx);
 
@@ -92,6 +113,23 @@ public class Ufo : MonoBehaviour
     private void Hurt()
     {
         _firstBloodParticles.Play();
+        _isHurt = true;
+        
+        if (!_firstHurt)
+        {
+            ServiceLocator.Get().PlaySound(_criStart);
+            _firstHurt = true;
+            _score.DOColor(new Color(1f, 0f, 0f), 0.5f);
+            _score.font = _font;
+            ServiceLocator.Get().ChangeMusic(_creepyMusic);
+        }
+        
+        if (_hasAttacked)
+        {
+            _faceSpriteRenderer.sprite = _attackHurt;
+            return;
+        }
+        _faceSpriteRenderer.sprite = _idleHurt;
     }
 
     private void Shoot()

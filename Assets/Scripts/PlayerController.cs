@@ -1,4 +1,5 @@
 using System;
+using Guarana.Interfaces;
 using UnityEngine;
 
 namespace Guarana
@@ -16,13 +17,21 @@ namespace Guarana
         [SerializeField] private float _shootCooldown;
 
         [Header("SFX")] 
-        [SerializeField] private AudioClip[] _shootSfxs;
+        [SerializeField] private AudioClip _shootSfx;
+        [SerializeField] private AudioClip _gameOverSfx;
+        [SerializeField] private ParticleSystem _gameOverVfx;
+
+        [SerializeField] private Shake _shake;
+        [SerializeField] private StartManager _startManager;
+        [SerializeField] private Sprite _gunSprite;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
 
         private Rigidbody2D _rb;
         private float _yPos;
 
         private float _shootCooldownTimer;
         private bool _tryToShoot;
+        private bool _firstShoot;
 
         #endregion
 
@@ -76,8 +85,16 @@ namespace Guarana
                 var projectile = Instantiate(_projectile, position, Quaternion.identity);
                 projectile.Rb.velocity = new Vector2(0f, _projectileSpeed);
 
+                if (!_firstShoot)
+                {
+                    _firstShoot = true;
+                    _spriteRenderer.sprite = _gunSprite;
+                }
+
                 _shootCooldownTimer = _shootCooldown;
                 
+                ServiceLocator.Get().PlaySound(_shootSfx);
+
                 playerShot?.Invoke();
             }
 
@@ -96,9 +113,29 @@ namespace Guarana
 
             if( _hp <= 0 )
             {
+                col.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, 1);
+            
+                ServiceLocator.Get().PlaySound(_gameOverSfx);
+                _gameOverVfx.Play();
+                _shake.StartShake();
+                
+                _startManager.StopGame();
                 Destroy(gameObject);
             }
+        }
 
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (!col.CompareTag("Enemy")) return;
+
+            col.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, 1);
+            
+            ServiceLocator.Get().PlaySound(_gameOverSfx);
+            _gameOverVfx.Play();
+            _shake.StartShake();
+            
+            _startManager.StopGame();
         }
 
         #endregion
