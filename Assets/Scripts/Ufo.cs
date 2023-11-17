@@ -14,6 +14,14 @@ public class Ufo : MonoBehaviour
 
     [SerializeField]
     private GameObject _spriteGameObject;
+    [SerializeField]
+    private float _repeatRate;
+    [SerializeField]
+    private GameObject _projectile;
+    [SerializeField]
+    private float _bulletspeed;
+    [SerializeField]
+    private int _randomRange;
 
     [Header("Particles")]
     [SerializeField] private ParticleSystem[] _bloodParticles;
@@ -57,6 +65,11 @@ public class Ufo : MonoBehaviour
         IsDead = false;
     }
 
+    private void Start()
+    {
+        InvokeRepeating("Shoot", 0, _repeatRate);
+    }
+
     //==== Private methods ====
     private void Die()
     {
@@ -79,5 +92,21 @@ public class Ufo : MonoBehaviour
     private void Hurt()
     {
         _firstBloodParticles.Play();
+    }
+
+    private void Shoot()
+    {
+        if (IsDead)
+            return;
+
+        if (Random.Range(0, _randomRange) != 0)
+        {
+            return;
+        }
+
+
+        GameObject proj = Instantiate(_projectile, transform.position, Quaternion.identity);
+
+        proj.GetComponent<Rigidbody2D>().velocity = Vector3.down * _bulletspeed;
     }
 }

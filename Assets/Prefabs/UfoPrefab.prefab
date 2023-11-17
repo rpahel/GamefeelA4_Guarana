@@ -179,6 +179,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hp: 2
   _spriteGameObject: {fileID: 1206358590661733850}
+  _repeatRate: 1
+  _projectile: {fileID: 7783578741519179805, guid: 9d620820dc996b34c8ad34f447c48aed, type: 3}
+  _bulletspeed: 2
+  _randomRange: 8
   _bloodParticles:
   - {fileID: 8237402395430602250}
   - {fileID: 2145671269778475392}

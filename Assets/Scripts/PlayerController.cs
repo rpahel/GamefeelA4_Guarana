@@ -8,6 +8,7 @@ namespace Guarana
         #region Fields
 
         [SerializeField] private float _moveSpeed;
+        [SerializeField] private int _hp;
         
         [Header("Projectile")]
         [SerializeField] private Projectile _projectile;
@@ -84,6 +85,20 @@ namespace Guarana
             {
                 _shootCooldownTimer -= Time.deltaTime;
             }
+        }
+
+        public void TakeDamage(int damage)
+        {
+            _hp -= damage;
+            // Lose
+
+
+
+            if( _hp <= 0 )
+            {
+                Destroy(gameObject);
+            }
+
         }
 
         #endregion
