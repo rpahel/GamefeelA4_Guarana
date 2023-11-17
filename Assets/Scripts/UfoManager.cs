@@ -201,9 +201,10 @@ namespace Guarana
             _movementCoroutine = null;
             _moveTween.Kill(false);
 
+            (int missingLeft, int missingRight) = GetNumberOfExtremitiesColumnsThatDisappeared();
             if (HasLostAnExtremitiesColumn())
             {
-                _ufoZoneSize = _initialUfoZoneSize - new Vector2(GetNumberOfExtremitiesColumnsThatDisappeared(), 0);
+                _ufoZoneSize = _initialUfoZoneSize - _ufoSize.x * new Vector2(missingLeft + missingRight, 0);
                 CalculateWaypoints();
             }
 
