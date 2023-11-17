@@ -35,7 +35,6 @@ namespace Guarana
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            Debug.Log("Entered");
             PlayerController pc = null;
             if (col.TryGetComponent(out pc))
                 pc.TakeDamage(1);

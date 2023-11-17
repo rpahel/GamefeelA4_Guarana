@@ -1372,6 +1372,9 @@ MonoBehaviour:
   _music: 52
   _score: 53
   _enemyCanShoot: 54
+  _allFeedbacks: 57
+  _zeroFeedbacks: 48
+  _reloadScene: 307
   _BGs:
   - {fileID: 1809210416}
   - {fileID: 1085117119}

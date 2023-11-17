@@ -3,6 +3,7 @@ using DG.Tweening;
 using Guarana.Interfaces;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Guarana
 {
@@ -17,6 +18,9 @@ namespace Guarana
      [SerializeField] private KeyCode _music;
      [SerializeField] private KeyCode _score;
      [SerializeField] private KeyCode _enemyCanShoot;
+     [SerializeField] private KeyCode _allFeedbacks;
+     [SerializeField] private KeyCode _zeroFeedbacks;
+     [SerializeField] private KeyCode _reloadScene;
      
      [SerializeField] private Background[] _BGs;
      [SerializeField] private ParticleSystem[] _winds;
@@ -104,6 +108,76 @@ namespace Guarana
          {
              EnemyCanShoot = !EnemyCanShoot;
          }
+         
+         if (Input.GetKeyDown(_allFeedbacks))
+         { 
+             EnemyShotBlood = true;
+             EnemyShotState = true; 
+             WindFootSteps = true; 
+             Music = true; 
+             Score = true; 
+             EnemyCanShoot = true;
+             
+             for (int i = 0; i < _BGs.Length; i++)
+             {
+                 _BGs[i].enabled = true;
+             }
+             
+             for (int i = 0; i < _winds.Length; i++)
+             {
+                 _winds[i].gameObject.SetActive(true);
+             }
+             
+             for (int i = 0; i < _playerFootSteps.Length; i++)
+             {
+                 _playerFootSteps[i].gameObject.SetActive(true);
+             }
+
+             _chromaticAbberation.gameObject.SetActive(true);
+             
+             if (Ufo._firstHurt)
+             {
+                 _scoreText.DOColor(new Color(1f, 0f, 0f), 0.5f);
+                 _scoreText.font = _creepyFont;  
+                 ServiceLocator.Get().ChangeMusic(_creepyMusic);
+             }
+         }
+         if (Input.GetKeyDown(_zeroFeedbacks))
+         { 
+             EnemyShotBlood = false;
+             EnemyShotState = false; 
+             WindFootSteps = false; 
+             Music = false; 
+             Score = false; 
+             EnemyCanShoot = false;
+             
+             for (int i = 0; i < _BGs.Length; i++)
+             {
+                 _BGs[i].enabled = false;
+             }
+             
+             for (int i = 0; i < _winds.Length; i++)
+             {
+                 _winds[i].gameObject.SetActive(false);
+             }
+             
+             for (int i = 0; i < _playerFootSteps.Length; i++)
+             {
+                 _playerFootSteps[i].gameObject.SetActive(false);
+             }
+
+             _chromaticAbberation.gameObject.SetActive(false);
+             
+             _scoreText.DOColor(new Color(1f, 0.5424528f, 0.9089146f), 0.5f);
+             _scoreText.font = _cuteFont;
+             ServiceLocator.Get().ChangeMusic(_normalMusic);
+         }
+
+         if (Input.GetKeyDown(_reloadScene))
+         {
+             SceneManager.LoadScene("FinalScene");
+         }
+         
      }
  
      private void Start()
