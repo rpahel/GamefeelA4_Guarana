@@ -440,39 +440,71 @@ namespace Guarana
                     if ((i - 1) < 0 || (i + 1) >= _nbOfAliveUfos.Length) // Extremité
                         return true;
                         
-                    if (_nbOfAliveUfos[i - 1] <= 0 || _nbOfAliveUfos[i + 1] <= 0) // Fausse Extremité
-                        return true;
+                    bool leftCleared = true;
+                    bool rightCleared = true;
+                    for (int n = 1; n < 69; n++)
+                    {
+                        if (i - n < 0)
+                            break;
+                            
+                        if (_nbOfAliveUfos[i - n] > 0)
+                        {
+                            leftCleared = false;
+                            break;
+                        }
+                    }
+                    
+                    for (int n = 1; n < 69; n++)
+                    {
+                        if (i + n >= _nbOfAliveUfos.Length)
+                            break;
+                        
+                        if (_nbOfAliveUfos[i + n] > 0)
+                        {
+                            rightCleared = false;
+                            break;
+                        }
+                    }
+
+                    return (leftCleared || rightCleared);
                 }
             }
 
             return false;
         }
 
-        private int GetNumberOfExtremitiesColumnsThatDisappeared()
+        private (int, int) GetNumberOfExtremitiesColumnsThatDisappeared()
         {
-            int ret = 0;
+            int retL = 0;
             // left to right
             for (int i = 0; i < _nbOfAliveUfos.Length; i++)
             {
-                if (_nbOfAliveUfos[i] <= 0)
-                    ret++;
+                if (_nbOfAliveUfos[i] == -1)
+                {
+                    _nbOfAliveUfos[i] = -2;
+                    retL++;
+                }
                 else
                     break;
             }
 
-            if (ret >= _nbOfAliveUfos.Length)
-                return _nbOfAliveUfos.Length;
+            if (retL >= _nbOfAliveUfos.Length)
+                return (_nbOfAliveUfos.Length, 0);
             
+            int retR = 0;
             // right to left
             for (int i = _nbOfAliveUfos.Length - 1; i >= 0; i--)
             {
-                if (_nbOfAliveUfos[i] <= 0)
-                    ret++;
+                if (_nbOfAliveUfos[i] == -1)
+                {
+                    _nbOfAliveUfos[i] = -2;
+                    retR++;
+                }
                 else
                     break;
             }
             
-            return ret;
+            return (retL, retR);
         }
     }
         #endregion
