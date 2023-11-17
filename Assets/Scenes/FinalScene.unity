@@ -201,7 +201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6894197307158533279, guid: 7ea25227fe876f54e9906666c833b60d, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -795,7 +795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6894197307158533279, guid: 7ea25227fe876f54e9906666c833b60d, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1233,7 +1233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6894197307158533279, guid: 7ea25227fe876f54e9906666c833b60d, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1469,11 +1469,11 @@ PrefabInstance:
       objectReference: {fileID: 1568375831}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _ufoSize.x
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _ufoSize.y
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _gameArea.x
@@ -1501,7 +1501,7 @@ PrefabInstance:
       objectReference: {fileID: 1258435521}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _ufoZoneSize.x
-      value: 7.7
+      value: 8.99
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _ufoZoneSize.y
@@ -1513,7 +1513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _movePauseDuration
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _startAnimationEase
@@ -1525,7 +1525,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _speedIncrementAmount
-      value: 0.03
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 3343773944382592582, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: _movementEaseOnUfoDeath
@@ -1549,7 +1549,7 @@ PrefabInstance:
       objectReference: {fileID: 1117473035}
     - target: {fileID: 4328054332549985310, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.8499999
+      value: -0.20499992
       objectReference: {fileID: 0}
     - target: {fileID: 4328054332549985310, guid: afcd84654d22ec64ca5bcda0b58e75eb, type: 3}
       propertyPath: m_LocalPosition.y

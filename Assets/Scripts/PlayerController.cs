@@ -22,6 +22,8 @@ namespace Guarana
 
         [SerializeField] private Shake _shake;
         [SerializeField] private StartManager _startManager;
+        [SerializeField] private Sprite _gunSprite;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
 
         private Rigidbody2D _rb;
         private float _yPos;
@@ -81,6 +83,12 @@ namespace Guarana
                 var position = new Vector2(transform.position.x + 0.3f, transform.position.y + _projectile.Collider.size.y / 2);
                 var projectile = Instantiate(_projectile, position, Quaternion.identity);
                 projectile.Rb.velocity = new Vector2(0f, _projectileSpeed);
+
+                if (!_firstShoot)
+                {
+                    _firstShoot = true;
+                    _spriteRenderer.sprite = _gunSprite;
+                }
 
                 _shootCooldownTimer = _shootCooldown;
                 

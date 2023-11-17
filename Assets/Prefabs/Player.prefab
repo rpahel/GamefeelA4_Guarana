@@ -4914,9 +4914,10 @@ MonoBehaviour:
   _shootSfx: {fileID: 8300000, guid: 6369c40379969994ebf6160b04b2e826, type: 3}
   _gameOverSfx: {fileID: 8300000, guid: 1c75d5fc76972b54c84d4d3bf4b93a04, type: 3}
   _gameOverVfx: {fileID: 911420160863864928}
-  _criStart: {fileID: 8300000, guid: cbe10f76d45fc3946bba193db11b2d2e, type: 3}
   _shake: {fileID: 0}
   _startManager: {fileID: 0}
+  _gunSprite: {fileID: 21300000, guid: 3c6e15230bbc9bd418a0b428e57f4199, type: 3}
+  _spriteRenderer: {fileID: 3603447819010298331}
 --- !u!61 &2328963081130443180
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5035,7 +5036,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 99
-  m_Sprite: {fileID: 21300000, guid: 3c6e15230bbc9bd418a0b428e57f4199, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c167d6fd5b8780647adeeb363ebf8f2a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
