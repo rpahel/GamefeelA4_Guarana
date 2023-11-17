@@ -1,4 +1,5 @@
 using System.Collections;
+using Guarana.Interfaces;
 using UnityEngine;
 
 namespace Guarana
@@ -11,6 +12,8 @@ namespace Guarana
         [SerializeField] private ParticleSystem[] _playerFootSteps;
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private Canvas _canvas;
+        [SerializeField] private AudioClip _music;
+        [SerializeField] private GameObject _chromaticAberation;
 
         void Start()
         {
@@ -33,7 +36,8 @@ namespace Guarana
             {
                 _playerFootSteps[i].gameObject.SetActive(false);
             }
-
+            
+            _chromaticAberation.SetActive(true);
             _playerController.enabled = false;
             UfoManager.IsPaused = true;
         }
@@ -56,9 +60,10 @@ namespace Guarana
             {
                 _playerFootSteps[i].gameObject.SetActive(true);
             }
-
+            
             _playerController.enabled = true;
             _canvas.gameObject.SetActive(true);
+            ServiceLocator.Get().ChangeMusic(_music);
         }
     }
 }

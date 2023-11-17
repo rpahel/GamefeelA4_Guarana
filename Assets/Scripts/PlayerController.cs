@@ -16,7 +16,7 @@ namespace Guarana
         [SerializeField] private float _shootCooldown;
 
         [Header("SFX")] 
-        [SerializeField] private AudioClip[] _shootSfxs;
+        [SerializeField] private AudioClip _shootSfx;
         [SerializeField] private AudioClip _gameOverSfx;
         [SerializeField] private ParticleSystem _gameOverVfx;
 
@@ -82,6 +82,8 @@ namespace Guarana
                 projectile.Rb.velocity = new Vector2(0f, _projectileSpeed);
 
                 _shootCooldownTimer = _shootCooldown;
+                
+                ServiceLocator.Get().PlaySound(_shootSfx);
                 
                 playerShot?.Invoke();
             }
