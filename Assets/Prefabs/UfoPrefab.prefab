@@ -336,8 +336,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3017799452710450409, guid: 2c5991b8d7294d740a3d309bdb862419, type: 3}
+      propertyPath: TrailModule.lifetime.scalar
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 3017799452710450409, guid: 2c5991b8d7294d740a3d309bdb862419, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: -10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4125950670078637375, guid: 2c5991b8d7294d740a3d309bdb862419, type: 3}
       propertyPath: m_Name
@@ -349,7 +353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5077445672074165091, guid: 2c5991b8d7294d740a3d309bdb862419, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: -0.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540952045945005773, guid: 2c5991b8d7294d740a3d309bdb862419, type: 3}
       propertyPath: m_LocalPosition.x
