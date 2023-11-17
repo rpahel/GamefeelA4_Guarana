@@ -30,14 +30,14 @@ namespace Guarana.Interfaces
 
         public void ChangeMusic(AudioClip audioClip, bool mainMusic = false)
         {
-            if (audioClip == null) return;
-            
             if (MusicAudioSource == null)
             {
                 MusicAudioSource = gameObject.AddComponent<AudioSource>();
                 MusicAudioSource.outputAudioMixerGroup = MusicMixerGroup;
                 MusicAudioSource.loop = true;
             }
+            
+            if (audioClip == null || audioClip == MusicAudioSource.clip) return;
 
             if (!mainMusic)
             {

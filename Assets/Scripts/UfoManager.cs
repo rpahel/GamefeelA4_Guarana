@@ -49,6 +49,8 @@ namespace Guarana
         [SerializeField] private float _startAnimationTime = 1f;
         [SerializeField] private Ease _startAnimationEase = Ease.Linear;
 
+        [SerializeField] private GameObject _chromaticAbberation;
+
         [Header("Effects")]
         [SerializeField, Tooltip("Blood splatter to spawn on wall.")]
         private GameObject _bloodSplatter;
@@ -112,6 +114,7 @@ namespace Guarana
             ShowUfoRows();
 
             Ufo._score = _scoreText;
+            Ufo._chromaticAbberation = _chromaticAbberation;
 
             StartCoroutine(StartAnimationCoroutine());
         }
@@ -198,9 +201,12 @@ namespace Guarana
             _score += 100;
             _scoreText.text = _score.ToString();
 
-            for (int i = 0; i < _scoreParticles.Length; i++)
+            if (FeedbackManager.Score)
             {
-                _scoreParticles[i].Play();
+                for (int i = 0; i < _scoreParticles.Length; i++)
+                {
+                    _scoreParticles[i].Play();
+                }
             }
 
             for (int i = 0; i < _nbOfAliveUfos.Length; i++)

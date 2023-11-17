@@ -46,21 +46,24 @@ namespace Guarana
         {
             yield return new WaitForSeconds(_timeBeforeStart);
 
-            for (int i = 0; i < _BGs.Length; i++)
+            if (FeedbackManager.WindFootSteps)
             {
-                _BGs[i].enabled = true;
-            }
+                for (int i = 0; i < _BGs.Length; i++)
+                {
+                    _BGs[i].enabled = true;
+                }
+                
+                for (int i = 0; i < _winds.Length; i++)
+                {
+                    _winds[i].gameObject.SetActive(true);
+                }
             
-            for (int i = 0; i < _winds.Length; i++)
-            {
-                _winds[i].gameObject.SetActive(true);
+                for (int i = 0; i < _playerFootSteps.Length; i++)
+                {
+                    _playerFootSteps[i].gameObject.SetActive(true);
+                }   
             }
-            
-            for (int i = 0; i < _playerFootSteps.Length; i++)
-            {
-                _playerFootSteps[i].gameObject.SetActive(true);
-            }
-            
+
             _playerController.enabled = true;
             _canvas.gameObject.SetActive(true);
             ServiceLocator.Get().ChangeMusic(_music);
