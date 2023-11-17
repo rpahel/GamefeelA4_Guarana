@@ -95,15 +95,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hp: 2
   _spriteGameObject: {fileID: 0}
-  _repeatRate: 1
+  _repeatRate: 2
   _projectile: {fileID: 7783578741519179805, guid: 9d620820dc996b34c8ad34f447c48aed, type: 3}
   _bulletspeed: 2
-  _randomRange: 8
+  _randomRange: 10
+  _faceSpriteRenderer: {fileID: 6905592718824889064}
+  _leftEarSpriteRenderer: {fileID: 4203240765909440014}
+  _rightEarSpriteRenderer: {fileID: 3124621756930347107}
+  _idleHurt: {fileID: 21300000, guid: 38243e1dc33a83241af952da83ae7778, type: 3}
+  _attack: {fileID: 21300000, guid: 50773ac2cca3e474dbf67d4f1fed63b8, type: 3}
+  _attackHurt: {fileID: 21300000, guid: 0a241550b640e7f4c97e2e920aa4defe, type: 3}
+  _animator: {fileID: 1392183237017059708}
   _bloodParticles:
   - {fileID: 8237402395430602250}
   - {fileID: 2145671269778475392}
   _firstBloodParticles: {fileID: 616258800097754201}
   _deathSfx: {fileID: 8300000, guid: a4b4d0aab194cac4d969c68b68a96afa, type: 3}
+  _criStart: {fileID: 0}
+  _font: {fileID: 0}
+  _creepyMusic: {fileID: 0}
   OnStart: []
   OnShoot: []
   OnHurt: []
@@ -165,9 +175,29 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d90b54eaed267842b1f381fe1d6d6a1, type: 3}
+--- !u!95 &1392183237017059708 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3670040407710644657, guid: 6d90b54eaed267842b1f381fe1d6d6a1, type: 3}
+  m_PrefabInstance: {fileID: 2430990562804627661}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &3124621756930347107 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 783766968011434158, guid: 6d90b54eaed267842b1f381fe1d6d6a1, type: 3}
+  m_PrefabInstance: {fileID: 2430990562804627661}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &4203240765909440014 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2010985041130352323, guid: 6d90b54eaed267842b1f381fe1d6d6a1, type: 3}
+  m_PrefabInstance: {fileID: 2430990562804627661}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6380655651424692695 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8732542947524481306, guid: 6d90b54eaed267842b1f381fe1d6d6a1, type: 3}
+  m_PrefabInstance: {fileID: 2430990562804627661}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &6905592718824889064 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 9108823768672707109, guid: 6d90b54eaed267842b1f381fe1d6d6a1, type: 3}
   m_PrefabInstance: {fileID: 2430990562804627661}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6278158556120967366
